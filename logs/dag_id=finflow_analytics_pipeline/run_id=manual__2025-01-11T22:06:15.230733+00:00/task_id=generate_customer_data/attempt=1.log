@@ -1,0 +1,23 @@
+[2025-01-11T22:06:20.554+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_analytics_pipeline.generate_customer_data manual__2025-01-11T22:06:15.230733+00:00 [queued]>
+[2025-01-11T22:06:20.587+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_analytics_pipeline.generate_customer_data manual__2025-01-11T22:06:15.230733+00:00 [queued]>
+[2025-01-11T22:06:20.589+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 2
+[2025-01-11T22:06:20.623+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): generate_customer_data> on 2025-01-11 22:06:15.230733+00:00
+[2025-01-11T22:06:20.647+0000] {standard_task_runner.py:57} INFO - Started process 817 to run task
+[2025-01-11T22:06:20.674+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_analytics_pipeline', 'generate_customer_data', 'manual__2025-01-11T22:06:15.230733+00:00', '--job-id', '42', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpx_dnjf68']
+[2025-01-11T22:06:20.701+0000] {standard_task_runner.py:85} INFO - Job 42: Subtask generate_customer_data
+[2025-01-11T22:06:20.862+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_analytics_pipeline.generate_customer_data manual__2025-01-11T22:06:15.230733+00:00 [running]> on host 4e62577a6f21
+[2025-01-11T22:06:21.056+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_analytics_pipeline' AIRFLOW_CTX_TASK_ID='generate_customer_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-11T22:06:15.230733+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-11T22:06:15.230733+00:00'
+[2025-01-11T22:06:21.453+0000] {conn.py:380} INFO - <BrokerConnection node_id=bootstrap-0 host=kafka:29092 <connecting> [IPv4 ('172.18.0.5', 29092)]>: connecting to kafka:29092 [('172.18.0.5', 29092) IPv4]
+[2025-01-11T22:06:21.461+0000] {conn.py:1205} INFO - Probing node bootstrap-0 broker version
+[2025-01-11T22:06:21.472+0000] {conn.py:410} INFO - <BrokerConnection node_id=bootstrap-0 host=kafka:29092 <connecting> [IPv4 ('172.18.0.5', 29092)]>: Connection complete.
+[2025-01-11T22:06:21.619+0000] {conn.py:1267} INFO - Broker version identified as 2.5.0
+[2025-01-11T22:06:21.621+0000] {conn.py:1268} INFO - Set configuration api_version=(2, 5, 0) to skip auto check_version requests on startup
+[2025-01-11T22:06:21.643+0000] {conn.py:380} INFO - <BrokerConnection node_id=1 host=kafka:29092 <connecting> [IPv4 ('172.18.0.5', 29092)]>: connecting to kafka:29092 [('172.18.0.5', 29092) IPv4]
+[2025-01-11T22:06:21.646+0000] {conn.py:410} INFO - <BrokerConnection node_id=1 host=kafka:29092 <connecting> [IPv4 ('172.18.0.5', 29092)]>: Connection complete.
+[2025-01-11T22:06:21.647+0000] {conn.py:919} INFO - <BrokerConnection node_id=bootstrap-0 host=kafka:29092 <connected> [IPv4 ('172.18.0.5', 29092)]>: Closing connection. 
+[2025-01-11T22:06:21.731+0000] {kafka.py:483} INFO - Closing the Kafka producer with 9223372036.0 secs timeout.
+[2025-01-11T22:06:21.733+0000] {conn.py:919} INFO - <BrokerConnection node_id=1 host=kafka:29092 <connected> [IPv4 ('172.18.0.5', 29092)]>: Closing connection. 
+[2025-01-11T22:06:21.735+0000] {python.py:194} INFO - Done. Returned value was: /tmp/tmpn7j02s66/customers.parquet
+[2025-01-11T22:06:21.774+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_analytics_pipeline, task_id=generate_customer_data, execution_date=20250111T220615, start_date=20250111T220620, end_date=20250111T220621
+[2025-01-11T22:06:21.883+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-11T22:06:22.308+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

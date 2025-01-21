@@ -1,0 +1,40 @@
+[2025-01-13T18:51:09.960+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.load_transaction_to_temp manual__2025-01-13T18:50:08.349110+00:00 [queued]>
+[2025-01-13T18:51:10.255+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.load_transaction_to_temp manual__2025-01-13T18:50:08.349110+00:00 [queued]>
+[2025-01-13T18:51:10.260+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-13T18:51:10.623+0000] {taskinstance.py:1382} INFO - Executing <Task(GCSToBigQueryOperator): load_to_gcs_bq.load_transaction_to_temp> on 2025-01-13 18:50:08.349110+00:00
+[2025-01-13T18:51:10.765+0000] {standard_task_runner.py:57} INFO - Started process 12730 to run task
+[2025-01-13T18:51:10.876+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.load_transaction_to_temp', 'manual__2025-01-13T18:50:08.349110+00:00', '--job-id', '572', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmplny559s0']
+[2025-01-13T18:51:10.985+0000] {standard_task_runner.py:85} INFO - Job 572: Subtask load_to_gcs_bq.load_transaction_to_temp
+[2025-01-13T18:51:11.942+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.load_transaction_to_temp manual__2025-01-13T18:50:08.349110+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T18:51:13.668+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.load_transaction_to_temp' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T18:50:08.349110+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T18:50:08.349110+00:00'
+[2025-01-13T18:51:13.735+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-13T18:51:13.758+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-13T18:51:13.764+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-13T18:51:13.801+0000] {gcs_to_bigquery.py:376} INFO - Using existing BigQuery table for storing data...
+[2025-01-13T18:51:15.241+0000] {gcs_to_bigquery.py:380} INFO - Executing: {'load': {'autodetect': True, 'createDisposition': 'CREATE_IF_NEEDED', 'destinationTable': {'projectId': 'finflow-analytics-production', 'datasetId': 'finflow_raw', 'tableId': 'src_transactions_temp'}, 'sourceFormat': 'PARQUET', 'sourceUris': ['gs://finflow-analytics-data/raw/transactions/2025-01-13/transactions.parquet'], 'writeDisposition': 'WRITE_TRUNCATE', 'ignoreUnknownValues': False}}
+[2025-01-13T18:51:15.253+0000] {bigquery.py:1595} INFO - Inserting job ***_finflow_source_data_pipeline_load_to_gcs_bq_load_transaction_to_temp_2025_01_13T18_50_08_349110_00_00_13435a32338d2b13032bfad1f85f9539
+[2025-01-13T18:51:15.971+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/transfers/gcs_to_bigquery.py", line 381, in execute
+    job: BigQueryJob | UnknownJob = self._submit_job(self.hook, job_id)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/transfers/gcs_to_bigquery.py", line 303, in _submit_job
+    return hook.insert_job(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/common/hooks/base_google.py", line 475, in inner_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 1598, in insert_job
+    job_api_repr._begin()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/base.py", line 693, in _begin
+    api_response = client._call_api(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/client.py", line 808, in _call_api
+    return call()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry.py", line 366, in retry_wrapped_func
+    return retry_target(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry.py", line 204, in retry_target
+    return target()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/_http/__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.NotFound: 404 POST https://bigquery.googleapis.com/bigquery/v2/projects/finflow-analytics-production/jobs?prettyPrint=false: Not found: Dataset finflow-analytics-production:finflow_raw
+[2025-01-13T18:51:16.146+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.load_transaction_to_temp, execution_date=20250113T185008, start_date=20250113T185109, end_date=20250113T185116
+[2025-01-13T18:51:16.350+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 572 for task load_to_gcs_bq.load_transaction_to_temp (404 POST https://bigquery.googleapis.com/bigquery/v2/projects/finflow-analytics-production/jobs?prettyPrint=false: Not found: Dataset finflow-analytics-production:finflow_raw; 12730)
+[2025-01-13T18:51:16.466+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-13T18:51:16.798+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,16 @@
+[2025-01-16T02:45:59.832+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.upload_location_to_gcs manual__2025-01-16T02:44:38.684852+00:00 [queued]>
+[2025-01-16T02:45:59.986+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.upload_location_to_gcs manual__2025-01-16T02:44:38.684852+00:00 [queued]>
+[2025-01-16T02:45:59.992+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T02:46:00.293+0000] {taskinstance.py:1382} INFO - Executing <Task(LocalFilesystemToGCSOperator): load_to_gcs_bq.upload_location_to_gcs> on 2025-01-16 02:44:38.684852+00:00
+[2025-01-16T02:46:00.375+0000] {standard_task_runner.py:57} INFO - Started process 3364 to run task
+[2025-01-16T02:46:00.434+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.upload_location_to_gcs', 'manual__2025-01-16T02:44:38.684852+00:00', '--job-id', '1700', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmph921z0t5']
+[2025-01-16T02:46:00.523+0000] {standard_task_runner.py:85} INFO - Job 1700: Subtask load_to_gcs_bq.upload_location_to_gcs
+[2025-01-16T02:46:01.229+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.upload_location_to_gcs manual__2025-01-16T02:44:38.684852+00:00 [running]> on host a445abefd56a
+[2025-01-16T02:46:02.507+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.upload_location_to_gcs' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T02:44:38.684852+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T02:44:38.684852+00:00'
+[2025-01-16T02:46:02.535+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-16T02:46:02.549+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-16T02:46:02.558+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-16T02:46:03.968+0000] {gcs.py:562} INFO - File /tmp/tmp03_o94j2/locations.parquet uploaded to raw/locations/2025-01-16/locations.parquet in finflow-analytics-data bucket
+[2025-01-16T02:46:04.036+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.upload_location_to_gcs, execution_date=20250116T024438, start_date=20250116T024559, end_date=20250116T024604
+[2025-01-16T02:46:04.262+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-16T02:46:04.846+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

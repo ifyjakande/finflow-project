@@ -1,0 +1,15 @@
+[2025-01-13T13:34:45.580+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_dimensions.generate_customer_data scheduled__2025-01-12T13:33:51.451198+00:00 [queued]>
+[2025-01-13T13:34:45.836+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_dimensions.generate_customer_data scheduled__2025-01-12T13:33:51.451198+00:00 [queued]>
+[2025-01-13T13:34:45.836+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 2
+[2025-01-13T13:34:46.190+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): generate_dimensions.generate_customer_data> on 2025-01-12 13:33:51.451198+00:00
+[2025-01-13T13:34:46.393+0000] {standard_task_runner.py:57} INFO - Started process 300 to run task
+[2025-01-13T13:34:46.639+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'generate_dimensions.generate_customer_data', 'scheduled__2025-01-12T13:33:51.451198+00:00', '--job-id', '93', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmp5exu5mnv']
+[2025-01-13T13:34:46.857+0000] {standard_task_runner.py:85} INFO - Job 93: Subtask generate_dimensions.generate_customer_data
+[2025-01-13T13:34:48.296+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.generate_dimensions.generate_customer_data scheduled__2025-01-12T13:33:51.451198+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T13:34:50.378+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='generate_dimensions.generate_customer_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-12T13:33:51.451198+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-01-12T13:33:51.451198+00:00'
+[2025-01-13T13:34:50.399+0000] {finflow.py:67} INFO - Starting data generation for generate_customer_data
+[2025-01-13T13:34:53.973+0000] {finflow.py:69} INFO - Successfully completed data generation for generate_customer_data
+[2025-01-13T13:34:53.985+0000] {python.py:194} INFO - Done. Returned value was: /tmp/tmp0y_x98qo/customers.parquet
+[2025-01-13T13:34:54.078+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=generate_dimensions.generate_customer_data, execution_date=20250112T133351, start_date=20250113T133445, end_date=20250113T133454
+[2025-01-13T13:34:54.297+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-13T13:34:54.682+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

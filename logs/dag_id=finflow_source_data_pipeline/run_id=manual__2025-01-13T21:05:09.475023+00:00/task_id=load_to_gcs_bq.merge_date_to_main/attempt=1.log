@@ -1,0 +1,64 @@
+[2025-01-13T21:06:33.557+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_date_to_main manual__2025-01-13T21:05:09.475023+00:00 [queued]>
+[2025-01-13T21:06:33.617+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_date_to_main manual__2025-01-13T21:05:09.475023+00:00 [queued]>
+[2025-01-13T21:06:33.618+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-13T21:06:33.756+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): load_to_gcs_bq.merge_date_to_main> on 2025-01-13 21:05:09.475023+00:00
+[2025-01-13T21:06:33.802+0000] {standard_task_runner.py:57} INFO - Started process 18765 to run task
+[2025-01-13T21:06:33.821+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.merge_date_to_main', 'manual__2025-01-13T21:05:09.475023+00:00', '--job-id', '1081', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpzaiic97c']
+[2025-01-13T21:06:33.859+0000] {standard_task_runner.py:85} INFO - Job 1081: Subtask load_to_gcs_bq.merge_date_to_main
+[2025-01-13T21:06:34.234+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_date_to_main manual__2025-01-13T21:05:09.475023+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T21:06:35.233+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.merge_date_to_main' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T21:05:09.475023+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T21:05:09.475023+00:00'
+[2025-01-13T21:06:35.269+0000] {bigquery.py:1241} INFO - Executing: 
+-- Create the target table if it doesn't exist
+CREATE TABLE IF NOT EXISTS `finflow-analytics-production.finflow_data.src_dates` (
+    date_key INTEGER NOT NULL,
+    full_date DATE NOT NULL,
+    year INTEGER NOT NULL,
+    quarter INTEGER NOT NULL,
+    month INTEGER NOT NULL,
+    day INTEGER NOT NULL,
+    day_of_week STRING NOT NULL,
+    is_weekend BOOLEAN NOT NULL,
+    is_holiday BOOLEAN NOT NULL,
+    fiscal_year STRING NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    ingestion_timestamp TIMESTAMP NOT NULL
+);
+
+-- Perform the merge operation
+MERGE `finflow-analytics-production.finflow_data.src_dates` T
+USING (
+    SELECT 
+        date_key, year, quarter, month, day, day_of_week, is_weekend, is_holiday, fiscal_year, created_at, updated_at, ingestion_timestamp,
+        -- Cast date fields to proper DATE type
+        PARSE_DATE('%Y-%m-%d', CAST(full_date AS STRING)) AS full_date_parsed
+    FROM `finflow-analytics-production.finflow_data.src_dates_temp`
+) S
+ON T.date_key = S.date_key
+WHEN MATCHED THEN
+    UPDATE SET
+        T.full_date = S.full_date_parsed,
+        T.year = S.year,
+        T.quarter = S.quarter,
+        T.month = S.month,
+        T.day = S.day,
+        T.day_of_week = S.day_of_week,
+        T.is_weekend = S.is_weekend,
+        T.is_holiday = S.is_holiday,
+        T.fiscal_year = S.fiscal_year,
+        T.created_at = S.created_at,
+        T.updated_at = S.updated_at,
+        T.ingestion_timestamp = S.ingestion_timestamp
+WHEN NOT MATCHED THEN
+    INSERT (date_key, full_date, year, quarter, month, day, day_of_week, is_weekend, is_holiday, fiscal_year, created_at, updated_at, ingestion_timestamp)
+    VALUES (S.date_key, S.full_date_parsed, S.year, S.quarter, S.month, S.day, S.day_of_week, S.is_weekend, S.is_holiday, S.fiscal_year, S.created_at, S.updated_at, S.ingestion_timestamp)
+[2025-01-13T21:06:35.290+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-13T21:06:35.294+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-13T21:06:35.300+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-13T21:06:35.320+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-13T21:06:36.130+0000] {bigquery.py:1595} INFO - Inserting job ***_1736802396124794_a93dc1cdee9875573abbe694b076b21c
+[2025-01-13T21:06:39.704+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.merge_date_to_main, execution_date=20250113T210509, start_date=20250113T210633, end_date=20250113T210639
+[2025-01-13T21:06:39.792+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-13T21:06:39.916+0000] {taskinstance.py:2778} INFO - 1 downstream tasks scheduled from follow-on schedule check

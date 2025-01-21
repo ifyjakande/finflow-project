@@ -1,0 +1,221 @@
+[2025-01-13T14:07:30.641+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_referential_integrity manual__2025-01-13T14:01:15.378177+00:00 [queued]>
+[2025-01-13T14:07:30.662+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_referential_integrity manual__2025-01-13T14:01:15.378177+00:00 [queued]>
+[2025-01-13T14:07:30.663+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 2
+[2025-01-13T14:07:30.692+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): data_quality_checks.verify_referential_integrity> on 2025-01-13 14:01:15.378177+00:00
+[2025-01-13T14:07:30.711+0000] {standard_task_runner.py:57} INFO - Started process 1686 to run task
+[2025-01-13T14:07:30.730+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'data_quality_checks.verify_referential_integrity', 'manual__2025-01-13T14:01:15.378177+00:00', '--job-id', '188', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmplyingzx5']
+[2025-01-13T14:07:30.736+0000] {standard_task_runner.py:85} INFO - Job 188: Subtask data_quality_checks.verify_referential_integrity
+[2025-01-13T14:07:30.921+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_referential_integrity manual__2025-01-13T14:01:15.378177+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T14:07:31.289+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='data_quality_checks.verify_referential_integrity' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T14:01:15.378177+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T14:01:15.378177+00:00'
+[2025-01-13T14:07:31.292+0000] {bigquery.py:1241} INFO - Executing: 
+            WITH integrity_checks AS (
+                -- Check Account to Customer references
+                SELECT 
+                    'account_to_customer' as check_name,
+                    COUNT(*) as invalid_refs,
+                    'Accounts referencing non-existent customers' as description
+                FROM `finflow-analytics-production.finflow_raw.src_accounts` a
+                LEFT JOIN `finflow-analytics-production.finflow_raw.src_customers` c 
+                    ON a.customer_key = c.customer_key
+                WHERE c.customer_key IS NULL
+                    AND DATE(a.ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                -- Check Account to Product references
+                SELECT 
+                    'account_to_product' as check_name,
+                    COUNT(*) as invalid_refs,
+                    'Accounts referencing non-existent products' as description
+                FROM `finflow-analytics-production.finflow_raw.src_accounts` a
+                LEFT JOIN `finflow-analytics-production.finflow_raw.src_products` p 
+                    ON a.product_key = p.product_key
+                WHERE p.product_key IS NULL
+                    AND DATE(a.ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                -- Check Transaction to Account references
+                SELECT 
+                    'transaction_to_account' as check_name,
+                    COUNT(*) as invalid_refs,
+                    'Transactions referencing non-existent accounts' as description
+                FROM `finflow-analytics-production.finflow_raw.src_transactions` t
+                LEFT JOIN `finflow-analytics-production.finflow_raw.src_accounts` a 
+                    ON t.account_key = a.account_key
+                WHERE a.account_key IS NULL
+                    AND DATE(t.ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                -- Check Transaction to Customer references
+                SELECT 
+                    'transaction_to_customer' as check_name,
+                    COUNT(*) as invalid_refs,
+                    'Transactions referencing non-existent customers' as description
+                FROM `finflow-analytics-production.finflow_raw.src_transactions` t
+                LEFT JOIN `finflow-analytics-production.finflow_raw.src_customers` c 
+                    ON t.customer_key = c.customer_key
+                WHERE c.customer_key IS NULL
+                    AND DATE(t.ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                -- Check Transaction to Product references
+                SELECT 
+                    'transaction_to_product' as check_name,
+                    COUNT(*) as invalid_refs,
+                    'Transactions referencing non-existent products' as description
+                FROM `finflow-analytics-production.finflow_raw.src_transactions` t
+                LEFT JOIN `finflow-analytics-production.finflow_raw.src_products` p 
+                    ON t.product_key = p.product_key
+                WHERE p.product_key IS NULL
+                    AND DATE(t.ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                -- Check Transaction to Location references
+                SELECT 
+                    'transaction_to_location' as check_name,
+                    COUNT(*) as invalid_refs,
+                    'Transactions referencing non-existent locations' as description
+                FROM `finflow-analytics-production.finflow_raw.src_transactions` t
+                LEFT JOIN `finflow-analytics-production.finflow_raw.src_locations` l 
+                    ON t.location_key = l.location_key
+                WHERE l.location_key IS NULL
+                    AND DATE(t.ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                -- Check Transaction to Date references
+                SELECT 
+                    'transaction_to_date' as check_name,
+                    COUNT(*) as invalid_refs,
+                    'Transactions referencing non-existent dates' as description
+                FROM `finflow-analytics-production.finflow_raw.src_transactions` t
+                LEFT JOIN `finflow-analytics-production.finflow_raw.src_dates` d 
+                    ON t.date_key = d.date_key
+                WHERE d.date_key IS NULL
+                    AND DATE(t.ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                -- Check for duplicate keys in dimension tables
+                SELECT 
+                    'duplicate_customer_keys' as check_name,
+                    COUNT(*) - COUNT(DISTINCT customer_key) as invalid_refs,
+                    'Duplicate customer keys found' as description
+                FROM `finflow-analytics-production.finflow_raw.src_customers`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                SELECT 
+                    'duplicate_product_keys' as check_name,
+                    COUNT(*) - COUNT(DISTINCT product_key) as invalid_refs,
+                    'Duplicate product keys found' as description
+                FROM `finflow-analytics-production.finflow_raw.src_products`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                SELECT 
+                    'duplicate_location_keys' as check_name,
+                    COUNT(*) - COUNT(DISTINCT location_key) as invalid_refs,
+                    'Duplicate location keys found' as description
+                FROM `finflow-analytics-production.finflow_raw.src_locations`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                SELECT 
+                    'duplicate_account_keys' as check_name,
+                    COUNT(*) - COUNT(DISTINCT account_key) as invalid_refs,
+                    'Duplicate account keys found' as description
+                FROM `finflow-analytics-production.finflow_raw.src_accounts`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                -- Check for duplicate natural keys
+                SELECT 
+                    'duplicate_customer_ids' as check_name,
+                    COUNT(*) - COUNT(DISTINCT customer_id) as invalid_refs,
+                    'Duplicate customer IDs found' as description
+                FROM `finflow-analytics-production.finflow_raw.src_customers`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                SELECT 
+                    'duplicate_product_ids' as check_name,
+                    COUNT(*) - COUNT(DISTINCT product_id) as invalid_refs,
+                    'Duplicate product IDs found' as description
+                FROM `finflow-analytics-production.finflow_raw.src_products`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+        
+                UNION ALL
+        
+                SELECT 
+                    'duplicate_account_ids' as check_name,
+                    COUNT(*) - COUNT(DISTINCT account_id) as invalid_refs,
+                    'Duplicate account IDs found' as description
+                FROM `finflow-analytics-production.finflow_raw.src_accounts`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+            )
+            SELECT 
+                CASE 
+                    WHEN EXISTS (SELECT 1 FROM integrity_checks WHERE invalid_refs > 0)
+                    THEN ERROR(CONCAT(
+                        'Referential integrity violations found:
+',
+                        STRING_AGG(
+                            IF(invalid_refs > 0,
+                               CONCAT('- ', check_name, ': ', CAST(invalid_refs AS STRING), ' violations - ', description),
+                               NULL),
+                            '
+'
+                        )
+                    ))
+                    ELSE 'All referential integrity checks passed successfully'
+                END as validation_result
+            FROM integrity_checks
+            
+[2025-01-13T14:07:31.294+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-13T14:07:31.295+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-13T14:07:31.298+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-13T14:07:31.300+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-13T14:07:31.441+0000] {bigquery.py:1595} INFO - Inserting job ***_1736777251440174_d68c5ab8e78b7ae14f7d196716a32f41
+[2025-01-13T14:07:31.739+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/operators/bigquery.py", line 1249, in execute
+    self.job_id = self.hook.run_query(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 2241, in run_query
+    job = self.insert_job(configuration=configuration, project_id=self.project_id, location=location)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/common/hooks/base_google.py", line 475, in inner_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 1601, in insert_job
+    job_api_repr.result(timeout=timeout, retry=retry)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1580, in result
+    do_get_result()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1570, in do_get_result
+    super(QueryJob, self).result(retry=retry, timeout=timeout)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/base.py", line 922, in result
+    return super(_AsyncJob, self).result(timeout=timeout, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/future/polling.py", line 261, in result
+    raise self._exception
+google.api_core.exceptions.BadRequest: 400 Syntax error: Unclosed string literal at [161:25]
+
+Location: US
+Job ID: airflow_1736777251440174_d68c5ab8e78b7ae14f7d196716a32f41
+
+[2025-01-13T14:07:31.759+0000] {taskinstance.py:1400} INFO - Marking task as UP_FOR_RETRY. dag_id=finflow_source_data_pipeline, task_id=data_quality_checks.verify_referential_integrity, execution_date=20250113T140115, start_date=20250113T140730, end_date=20250113T140731
+[2025-01-13T14:07:31.785+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 188 for task data_quality_checks.verify_referential_integrity (400 Syntax error: Unclosed string literal at [161:25]
+
+Location: US
+Job ID: airflow_1736777251440174_d68c5ab8e78b7ae14f7d196716a32f41
+; 1686)
+[2025-01-13T14:07:31.839+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-13T14:07:31.876+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

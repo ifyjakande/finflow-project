@@ -1,0 +1,25 @@
+[2025-01-17T15:03:00.021+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.dbt_transformations.dbt_clean manual__2025-01-17T15:00:07.196996+00:00 [queued]>
+[2025-01-17T15:03:00.076+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.dbt_transformations.dbt_clean manual__2025-01-17T15:00:07.196996+00:00 [queued]>
+[2025-01-17T15:03:00.077+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-17T15:03:00.115+0000] {taskinstance.py:1382} INFO - Executing <Task(DbtBaseOperator): dbt_transformations.dbt_clean> on 2025-01-17 15:00:07.196996+00:00
+[2025-01-17T15:03:00.131+0000] {standard_task_runner.py:57} INFO - Started process 1227 to run task
+[2025-01-17T15:03:00.150+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'dbt_transformations.dbt_clean', 'manual__2025-01-17T15:00:07.196996+00:00', '--job-id', '3312', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpjien6ux7']
+[2025-01-17T15:03:00.168+0000] {standard_task_runner.py:85} INFO - Job 3312: Subtask dbt_transformations.dbt_clean
+[2025-01-17T15:03:00.318+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.dbt_transformations.dbt_clean manual__2025-01-17T15:00:07.196996+00:00 [running]> on host 9b2833750dff
+[2025-01-17T15:03:00.593+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='dbt_transformations.dbt_clean' AIRFLOW_CTX_EXECUTION_DATE='2025-01-17T15:00:07.196996+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-17T15:00:07.196996+00:00'
+[2025-01-17T15:03:10.032+0000] {finflow.py:618} INFO - [0m15:03:09  Running with dbt=1.8.7
+[0m15:03:09  [[33mWARNING[0m]: Deprecated functionality
+The `tests` config has been renamed to `data_tests`. Please see
+https://docs.getdbt.com/docs/build/data-tests#new-data_tests-syntax for more
+information.
+[0m15:03:09  Checking /opt/dbt/dbt_packages/*
+[0m15:03:09  Cleaned /opt/dbt/dbt_packages/*
+[0m15:03:09  Checking /opt/dbt/logs/*
+[0m15:03:09  Cleaned /opt/dbt/logs/*
+[0m15:03:09  Checking /opt/dbt/target/*
+[0m15:03:09  Cleaned /opt/dbt/target/*
+[0m15:03:09  Finished cleaning all paths.
+
+[2025-01-17T15:03:10.100+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=dbt_transformations.dbt_clean, execution_date=20250117T150007, start_date=20250117T150300, end_date=20250117T150310
+[2025-01-17T15:03:10.152+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-17T15:03:10.242+0000] {taskinstance.py:2778} INFO - 1 downstream tasks scheduled from follow-on schedule check

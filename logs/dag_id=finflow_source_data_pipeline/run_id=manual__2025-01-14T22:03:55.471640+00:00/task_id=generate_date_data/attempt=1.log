@@ -1,0 +1,15 @@
+[2025-01-14T22:04:14.567+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_date_data manual__2025-01-14T22:03:55.471640+00:00 [queued]>
+[2025-01-14T22:04:14.610+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_date_data manual__2025-01-14T22:03:55.471640+00:00 [queued]>
+[2025-01-14T22:04:14.617+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-14T22:04:14.671+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): generate_date_data> on 2025-01-14 22:03:55.471640+00:00
+[2025-01-14T22:04:14.689+0000] {standard_task_runner.py:57} INFO - Started process 156 to run task
+[2025-01-14T22:04:14.713+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'generate_date_data', 'manual__2025-01-14T22:03:55.471640+00:00', '--job-id', '1278', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpvgfqm8xi']
+[2025-01-14T22:04:14.720+0000] {standard_task_runner.py:85} INFO - Job 1278: Subtask generate_date_data
+[2025-01-14T22:04:14.970+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.generate_date_data manual__2025-01-14T22:03:55.471640+00:00 [running]> on host 3668defc41dc
+[2025-01-14T22:04:15.558+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='generate_date_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-14T22:03:55.471640+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-14T22:03:55.471640+00:00'
+[2025-01-14T22:04:15.561+0000] {finflow.py:132} INFO - Starting data generation for generate_date_dimension
+[2025-01-14T22:04:16.664+0000] {finflow.py:134} INFO - Successfully completed data generation for generate_date_dimension
+[2025-01-14T22:04:16.665+0000] {python.py:194} INFO - Done. Returned value was: /tmp/tmp8qdo1aqm/dates.parquet
+[2025-01-14T22:04:16.777+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=generate_date_data, execution_date=20250114T220355, start_date=20250114T220414, end_date=20250114T220416
+[2025-01-14T22:04:17.024+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-14T22:04:17.754+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,22 @@
+[2025-01-11T22:01:38.712+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_analytics_pipeline.generate_account_balances manual__2025-01-11T21:54:51.365097+00:00 [queued]>
+[2025-01-11T22:01:38.727+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_analytics_pipeline.generate_account_balances manual__2025-01-11T21:54:51.365097+00:00 [queued]>
+[2025-01-11T22:01:38.728+0000] {taskinstance.py:1361} INFO - Starting attempt 2 of 2
+[2025-01-11T22:01:38.746+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): generate_account_balances> on 2025-01-11 21:54:51.365097+00:00
+[2025-01-11T22:01:38.756+0000] {standard_task_runner.py:57} INFO - Started process 637 to run task
+[2025-01-11T22:01:38.763+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_analytics_pipeline', 'generate_account_balances', 'manual__2025-01-11T21:54:51.365097+00:00', '--job-id', '40', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpfokgbaxs']
+[2025-01-11T22:01:38.768+0000] {standard_task_runner.py:85} INFO - Job 40: Subtask generate_account_balances
+[2025-01-11T22:01:38.845+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_analytics_pipeline.generate_account_balances manual__2025-01-11T21:54:51.365097+00:00 [running]> on host 4e62577a6f21
+[2025-01-11T22:01:38.952+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_analytics_pipeline' AIRFLOW_CTX_TASK_ID='generate_account_balances' AIRFLOW_CTX_EXECUTION_DATE='2025-01-11T21:54:51.365097+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-11T21:54:51.365097+00:00'
+[2025-01-11T22:01:39.238+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/finflow.py", line 300, in generate_account_balances
+    credits, debits = transaction_amounts.get(account_id, (0, 0))[0] if account_id in transaction_amounts.index else (0, 0)
+TypeError: cannot unpack non-iterable int object
+[2025-01-11T22:01:39.273+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=finflow_analytics_pipeline, task_id=generate_account_balances, execution_date=20250111T215451, start_date=20250111T220138, end_date=20250111T220139
+[2025-01-11T22:01:39.302+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 40 for task generate_account_balances (cannot unpack non-iterable int object; 637)
+[2025-01-11T22:01:39.347+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-11T22:01:39.407+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

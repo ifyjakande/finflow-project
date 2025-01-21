@@ -1,0 +1,101 @@
+[2025-01-13T15:21:41.997+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_referential_integrity manual__2025-01-13T15:20:24.956373+00:00 [queued]>
+[2025-01-13T15:21:42.016+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_referential_integrity manual__2025-01-13T15:20:24.956373+00:00 [queued]>
+[2025-01-13T15:21:42.017+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-13T15:21:42.054+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): data_quality_checks.verify_referential_integrity> on 2025-01-13 15:20:24.956373+00:00
+[2025-01-13T15:21:42.083+0000] {standard_task_runner.py:57} INFO - Started process 4746 to run task
+[2025-01-13T15:21:42.109+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'data_quality_checks.verify_referential_integrity', 'manual__2025-01-13T15:20:24.956373+00:00', '--job-id', '382', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmp8odzpm5c']
+[2025-01-13T15:21:42.119+0000] {standard_task_runner.py:85} INFO - Job 382: Subtask data_quality_checks.verify_referential_integrity
+[2025-01-13T15:21:42.214+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_referential_integrity manual__2025-01-13T15:20:24.956373+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T15:21:42.400+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='data_quality_checks.verify_referential_integrity' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T15:20:24.956373+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T15:20:24.956373+00:00'
+[2025-01-13T15:21:42.402+0000] {bigquery.py:1241} INFO - Executing: 
+WITH integrity_checks AS (
+    -- Check Account to Customer references
+    SELECT 
+        'account_to_customer' as check_name,
+        COUNT(*) as invalid_refs,
+        'Accounts referencing non-existent customers' as description
+    FROM `finflow-analytics-production.finflow_raw.src_accounts` a
+    LEFT JOIN `finflow-analytics-production.finflow_raw.src_customers` c 
+        ON a.customer_key = c.customer_key
+    WHERE c.customer_key IS NULL
+        AND DATE(a.ingestion_timestamp) = DATE('2025-01-13')
+
+    UNION ALL
+
+    -- Check Account to Product references
+    SELECT 
+        'account_to_product' as check_name,
+        COUNT(*) as invalid_refs,
+        'Accounts referencing non-existent products' as description
+    FROM `finflow-analytics-production.finflow_raw.src_accounts` a
+    LEFT JOIN `finflow-analytics-production.finflow_raw.src_products` p 
+        ON a.product_key = p.product_key
+    WHERE p.product_key IS NULL
+        AND DATE(a.ingestion_timestamp) = DATE('2025-01-13')
+
+    UNION ALL
+
+    -- Check Transaction to Account references
+    SELECT 
+        'transaction_to_account' as check_name,
+        COUNT(*) as invalid_refs,
+        'Transactions referencing non-existent accounts' as description
+    FROM `finflow-analytics-production.finflow_raw.src_transactions` t
+    LEFT JOIN `finflow-analytics-production.finflow_raw.src_accounts` a 
+        ON t.account_key = a.account_key
+    WHERE a.account_key IS NULL
+        AND DATE(t.ingestion_timestamp) = DATE('2025-01-13')
+
+    UNION ALL
+
+    -- Check Transaction to Location references
+    SELECT 
+        'transaction_to_location' as check_name,
+        COUNT(*) as invalid_refs,
+        'Transactions referencing non-existent locations' as description
+    FROM `finflow-analytics-production.finflow_raw.src_transactions` t
+    LEFT JOIN `finflow-analytics-production.finflow_raw.src_locations` l 
+        ON t.location_key = l.location_key
+    WHERE l.location_key IS NULL
+        AND DATE(t.ingestion_timestamp) = DATE('2025-01-13')
+
+    UNION ALL
+
+    -- Check Transaction to Date references
+    SELECT 
+        'transaction_to_date' as check_name,
+        COUNT(*) as invalid_refs,
+        'Transactions referencing non-existent dates' as description
+    FROM `finflow-analytics-production.finflow_raw.src_transactions` t
+    LEFT JOIN `finflow-analytics-production.finflow_raw.src_dates` d
+        ON t.date_key = d.date_key
+    WHERE d.date_key IS NULL
+        AND DATE(t.ingestion_timestamp) = DATE('2025-01-13')
+)
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM integrity_checks 
+            WHERE invalid_refs > 0
+        ) THEN ERROR('Referential integrity violations found: ' ||
+                    STRING_AGG(
+                        IF(invalid_refs > 0, 
+                           CONCAT(check_name, ' (', CAST(invalid_refs AS STRING), ' violations): ', description),
+                           NULL
+                        ),
+                        '; '
+                    ))
+        ELSE 'All referential integrity checks passed'
+    END as validation_result
+FROM integrity_checks
+[2025-01-13T15:21:42.408+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-13T15:21:42.409+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-13T15:21:42.410+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-13T15:21:42.413+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-13T15:21:42.511+0000] {bigquery.py:1595} INFO - Inserting job ***_1736781702509830_89e967c0c52a9a8324ab517069a82441
+[2025-01-13T15:21:43.716+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=data_quality_checks.verify_referential_integrity, execution_date=20250113T152024, start_date=20250113T152141, end_date=20250113T152143
+[2025-01-13T15:21:43.773+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-13T15:21:43.808+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

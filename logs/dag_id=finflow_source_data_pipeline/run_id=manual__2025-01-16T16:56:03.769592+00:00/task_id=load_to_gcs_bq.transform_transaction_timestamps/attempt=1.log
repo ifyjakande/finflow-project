@@ -1,0 +1,53 @@
+[2025-01-16T16:57:41.187+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_transaction_timestamps manual__2025-01-16T16:56:03.769592+00:00 [queued]>
+[2025-01-16T16:57:41.507+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_transaction_timestamps manual__2025-01-16T16:56:03.769592+00:00 [queued]>
+[2025-01-16T16:57:41.507+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T16:57:41.812+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): load_to_gcs_bq.transform_transaction_timestamps> on 2025-01-16 16:56:03.769592+00:00
+[2025-01-16T16:57:41.919+0000] {standard_task_runner.py:57} INFO - Started process 1844 to run task
+[2025-01-16T16:57:42.047+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.transform_transaction_timestamps', 'manual__2025-01-16T16:56:03.769592+00:00', '--job-id', '2053', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpegaj82y3']
+[2025-01-16T16:57:42.122+0000] {standard_task_runner.py:85} INFO - Job 2053: Subtask load_to_gcs_bq.transform_transaction_timestamps
+[2025-01-16T16:57:42.943+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_transaction_timestamps manual__2025-01-16T16:56:03.769592+00:00 [running]> on host e65a9a79c958
+[2025-01-16T16:57:44.436+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.transform_transaction_timestamps' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T16:56:03.769592+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T16:56:03.769592+00:00'
+[2025-01-16T16:57:44.465+0000] {bigquery.py:1241} INFO - Executing: 
+                CREATE OR REPLACE TABLE `finflow-analytics-production.finflow_data.src_transactions_temp` AS
+                SELECT 
+                    CASE WHEN 'transaction_id' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(transaction_id AS INT64)) ELSE transaction_id END AS transaction_id, CASE WHEN 'account_key' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(account_key AS INT64)) ELSE account_key END AS account_key, CASE WHEN 'customer_key' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(customer_key AS INT64)) ELSE customer_key END AS customer_key, CASE WHEN 'product_key' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(product_key AS INT64)) ELSE product_key END AS product_key, CASE WHEN 'location_key' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(location_key AS INT64)) ELSE location_key END AS location_key, CASE WHEN 'date_key' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(date_key AS INT64)) ELSE date_key END AS date_key, CASE WHEN 'transaction_type' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(transaction_type AS INT64)) ELSE transaction_type END AS transaction_type, CASE WHEN 'transaction_amount' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(transaction_amount AS INT64)) ELSE transaction_amount END AS transaction_amount, CASE WHEN 'fee_amount' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(fee_amount AS INT64)) ELSE fee_amount END AS fee_amount, CASE WHEN 'transaction_status' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(transaction_status AS INT64)) ELSE transaction_status END AS transaction_status, CASE WHEN 'created_at' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(created_at AS INT64)) ELSE created_at END AS created_at, CASE WHEN 'updated_at' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(updated_at AS INT64)) ELSE updated_at END AS updated_at, CASE WHEN 'ingestion_timestamp' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(ingestion_timestamp AS INT64)) ELSE ingestion_timestamp END AS ingestion_timestamp
+                FROM `finflow-analytics-production.finflow_data.src_transactions_temp`
+                
+[2025-01-16T16:57:44.481+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-16T16:57:44.524+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-16T16:57:44.526+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-16T16:57:44.557+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-16T16:57:45.762+0000] {bigquery.py:1595} INFO - Inserting job ***_1737046665761443_828aee4bd7814b1ed5ad51c7b8fb23b1
+[2025-01-16T16:57:47.017+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/operators/bigquery.py", line 1249, in execute
+    self.job_id = self.hook.run_query(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 2241, in run_query
+    job = self.insert_job(configuration=configuration, project_id=self.project_id, location=location)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/common/hooks/base_google.py", line 475, in inner_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 1601, in insert_job
+    job_api_repr.result(timeout=timeout, retry=retry)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1580, in result
+    do_get_result()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1570, in do_get_result
+    super(QueryJob, self).result(retry=retry, timeout=timeout)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/base.py", line 922, in result
+    return super(_AsyncJob, self).result(timeout=timeout, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/future/polling.py", line 261, in result
+    raise self._exception
+google.api_core.exceptions.BadRequest: 400 No matching signature for operator CASE; all THEN/ELSE arguments must be coercible to a common type but found: INT64, TIMESTAMP; actual argument types (WHEN THEN) ELSE: (BOOL TIMESTAMP) INT64 at [4:21]
+
+Location: us-central1
+Job ID: airflow_1737046665761443_828aee4bd7814b1ed5ad51c7b8fb23b1
+
+[2025-01-16T16:57:47.125+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.transform_transaction_timestamps, execution_date=20250116T165603, start_date=20250116T165741, end_date=20250116T165747
+[2025-01-16T16:57:47.704+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 2053 for task load_to_gcs_bq.transform_transaction_timestamps (400 No matching signature for operator CASE; all THEN/ELSE arguments must be coercible to a common type but found: INT64, TIMESTAMP; actual argument types (WHEN THEN) ELSE: (BOOL TIMESTAMP) INT64 at [4:21]
+
+Location: us-central1
+Job ID: airflow_1737046665761443_828aee4bd7814b1ed5ad51c7b8fb23b1
+; 1844)
+[2025-01-16T16:57:47.904+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-16T16:57:48.266+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

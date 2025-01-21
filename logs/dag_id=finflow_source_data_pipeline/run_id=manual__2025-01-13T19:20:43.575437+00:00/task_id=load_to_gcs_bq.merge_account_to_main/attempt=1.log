@@ -1,0 +1,80 @@
+[2025-01-13T19:22:06.939+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_account_to_main manual__2025-01-13T19:20:43.575437+00:00 [queued]>
+[2025-01-13T19:22:07.018+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_account_to_main manual__2025-01-13T19:20:43.575437+00:00 [queued]>
+[2025-01-13T19:22:07.018+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-13T19:22:07.158+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): load_to_gcs_bq.merge_account_to_main> on 2025-01-13 19:20:43.575437+00:00
+[2025-01-13T19:22:07.229+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.merge_account_to_main', 'manual__2025-01-13T19:20:43.575437+00:00', '--job-id', '832', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpb26z5477']
+[2025-01-13T19:22:07.245+0000] {standard_task_runner.py:85} INFO - Job 832: Subtask load_to_gcs_bq.merge_account_to_main
+[2025-01-13T19:22:07.211+0000] {standard_task_runner.py:57} INFO - Started process 14458 to run task
+[2025-01-13T19:22:07.473+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_account_to_main manual__2025-01-13T19:20:43.575437+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T19:22:07.878+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.merge_account_to_main' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T19:20:43.575437+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T19:20:43.575437+00:00'
+[2025-01-13T19:22:07.880+0000] {bigquery.py:1241} INFO - Executing: 
+-- Create the target table if it doesn't exist
+CREATE TABLE IF NOT EXISTS `finflow-analytics-production.finflow_raw.src_accounts` (
+    customer_key INTEGER NOT NULL,
+    customer_id INTEGER NOT NULL,
+    first_name STRING NOT NULL,
+    last_name STRING NOT NULL,
+    email STRING NOT NULL,
+    phone_number STRING NOT NULL,
+    address STRING NOT NULL,
+    city STRING NOT NULL,
+    state STRING NOT NULL,
+    country STRING NOT NULL,
+    postal_code STRING NOT NULL,
+    customer_segment STRING NOT NULL,
+    customer_since_date DATE NOT NULL,
+    total_accounts INTEGER NOT NULL,
+    active_accounts INTEGER NOT NULL,
+    total_transaction_volume FLOAT64 NOT NULL,
+    last_transaction_date TIMESTAMP NOT NULL,
+    is_active BOOLEAN NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    ingestion_timestamp TIMESTAMP NOT NULL
+);
+
+-- Perform the merge operation
+MERGE `finflow-analytics-production.finflow_raw.src_accounts` T
+USING `finflow-analytics-production.finflow_raw.src_accounts_temp` S
+ON T.account_key = S.account_key
+WHEN NOT MATCHED THEN
+  INSERT (customer_key, customer_id, first_name, last_name, email, phone_number, address, city, state, country, postal_code, customer_segment, customer_since_date, total_accounts, active_accounts, total_transaction_volume, last_transaction_date, is_active, created_at, updated_at, ingestion_timestamp)
+  VALUES (S.customer_key, S.customer_id, S.first_name, S.last_name, S.email, S.phone_number, S.address, S.city, S.state, S.country, S.postal_code, S.customer_segment, S.customer_since_date, S.total_accounts, S.active_accounts, S.total_transaction_volume, S.last_transaction_date, S.is_active, S.created_at, S.updated_at, S.ingestion_timestamp)
+[2025-01-13T19:22:07.888+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-13T19:22:07.891+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-13T19:22:07.900+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-13T19:22:07.913+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-13T19:22:08.444+0000] {bigquery.py:1595} INFO - Inserting job ***_1736796128423685_afe6e208ab1950c384bd2e6c5aa7b7b5
+[2025-01-13T19:22:09.818+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/operators/bigquery.py", line 1249, in execute
+    self.job_id = self.hook.run_query(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 2241, in run_query
+    job = self.insert_job(configuration=configuration, project_id=self.project_id, location=location)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/common/hooks/base_google.py", line 475, in inner_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 1601, in insert_job
+    job_api_repr.result(timeout=timeout, retry=retry)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1580, in result
+    do_get_result()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1570, in do_get_result
+    super(QueryJob, self).result(retry=retry, timeout=timeout)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/base.py", line 922, in result
+    return super(_AsyncJob, self).result(timeout=timeout, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/future/polling.py", line 261, in result
+    raise self._exception
+google.api_core.exceptions.BadRequest: 400 Query error: Column customer_id is not present in target table  at [32:25]
+
+Location: us-central1
+Job ID: airflow_1736796128423685_afe6e208ab1950c384bd2e6c5aa7b7b5
+
+[2025-01-13T19:22:09.874+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.merge_account_to_main, execution_date=20250113T192043, start_date=20250113T192206, end_date=20250113T192209
+[2025-01-13T19:22:10.022+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 832 for task load_to_gcs_bq.merge_account_to_main (400 Query error: Column customer_id is not present in target table  at [32:25]
+
+Location: us-central1
+Job ID: airflow_1736796128423685_afe6e208ab1950c384bd2e6c5aa7b7b5
+; 14458)
+[2025-01-13T19:22:10.143+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-13T19:22:10.348+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

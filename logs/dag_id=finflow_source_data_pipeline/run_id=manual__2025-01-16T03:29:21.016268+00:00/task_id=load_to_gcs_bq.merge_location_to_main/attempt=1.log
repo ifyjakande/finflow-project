@@ -1,0 +1,102 @@
+[2025-01-16T03:30:53.482+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_location_to_main manual__2025-01-16T03:29:21.016268+00:00 [queued]>
+[2025-01-16T03:30:53.688+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_location_to_main manual__2025-01-16T03:29:21.016268+00:00 [queued]>
+[2025-01-16T03:30:53.695+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T03:30:53.885+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): load_to_gcs_bq.merge_location_to_main> on 2025-01-16 03:29:21.016268+00:00
+[2025-01-16T03:30:53.910+0000] {standard_task_runner.py:57} INFO - Started process 917 to run task
+[2025-01-16T03:30:53.939+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.merge_location_to_main', 'manual__2025-01-16T03:29:21.016268+00:00', '--job-id', '1838', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpw0ado324']
+[2025-01-16T03:30:53.967+0000] {standard_task_runner.py:85} INFO - Job 1838: Subtask load_to_gcs_bq.merge_location_to_main
+[2025-01-16T03:30:54.162+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_location_to_main manual__2025-01-16T03:29:21.016268+00:00 [running]> on host 39f0a5abbf98
+[2025-01-16T03:30:54.917+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.merge_location_to_main' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T03:29:21.016268+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T03:29:21.016268+00:00'
+[2025-01-16T03:30:54.924+0000] {bigquery.py:1241} INFO - Executing: 
+-- Create the target table if it doesn't exist
+CREATE TABLE IF NOT EXISTS `finflow-analytics-production.finflow_data.src_locations` (
+    location_key INTEGER NOT NULL,
+    location_id STRING NOT NULL,
+    location_name STRING NOT NULL,
+    address STRING NOT NULL,
+    city STRING NOT NULL,
+    state STRING NOT NULL,
+    region STRING NOT NULL,
+    country STRING NOT NULL,
+    country_name STRING NOT NULL,
+    country_code STRING NOT NULL,
+    currency_code STRING NOT NULL,
+    postal_code STRING NOT NULL,
+    timezone STRING NOT NULL,
+    latitude FLOAT64 NOT NULL,
+    longitude FLOAT64 NOT NULL,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    ingestion_timestamp TIMESTAMP NOT NULL
+);
+
+-- Perform the merge operation
+MERGE `finflow-analytics-production.finflow_data.src_locations` T
+USING (
+    SELECT 
+        *  -- This already includes created_at, updated_at, and ingestion_timestamp
+        
+        -- No date fields to cast
+    FROM `finflow-analytics-production.finflow_data.src_locations_temp`
+) S
+ON T.location_key = S.location_key
+WHEN MATCHED THEN
+    UPDATE SET
+        T.location_id = S.location_id,
+        T.location_name = S.location_name,
+        T.address = S.address,
+        T.city = S.city,
+        T.state = S.state,
+        T.region = S.region,
+        T.country = S.country,
+        T.country_name = S.country_name,
+        T.country_code = S.country_code,
+        T.currency_code = S.currency_code,
+        T.postal_code = S.postal_code,
+        T.timezone = S.timezone,
+        T.latitude = S.latitude,
+        T.longitude = S.longitude,
+        T.created_at = S.created_at,
+        T.updated_at = S.updated_at,
+        T.ingestion_timestamp = S.ingestion_timestamp
+WHEN NOT MATCHED THEN
+    INSERT (location_key, location_id, location_name, address, city, state, region, country, country_name, country_code, currency_code, postal_code, timezone, latitude, longitude, created_at, updated_at, ingestion_timestamp)
+    VALUES (S.location_key, S.location_id, S.location_name, S.address, S.city, S.state, S.region, S.country, S.country_name, S.country_code, S.currency_code, S.postal_code, S.timezone, S.latitude, S.longitude, S.created_at, S.updated_at, S.ingestion_timestamp)
+[2025-01-16T03:30:54.929+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-16T03:30:54.930+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-16T03:30:54.967+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-16T03:30:54.977+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-16T03:30:55.340+0000] {bigquery.py:1595} INFO - Inserting job ***_1736998255317600_a310e566a8150c8307fc3cb423a74076
+[2025-01-16T03:30:57.165+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/operators/bigquery.py", line 1249, in execute
+    self.job_id = self.hook.run_query(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 2241, in run_query
+    job = self.insert_job(configuration=configuration, project_id=self.project_id, location=location)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/common/hooks/base_google.py", line 475, in inner_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 1601, in insert_job
+    job_api_repr.result(timeout=timeout, retry=retry)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1580, in result
+    do_get_result()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1570, in do_get_result
+    super(QueryJob, self).result(retry=retry, timeout=timeout)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/base.py", line 922, in result
+    return super(_AsyncJob, self).result(timeout=timeout, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/future/polling.py", line 261, in result
+    raise self._exception
+google.api_core.exceptions.BadRequest: 400 Query error: Value of type INT64 cannot be assigned to T.created_at, which has type TIMESTAMP at [50:24]
+
+Location: us-central1
+Job ID: airflow_1736998255317600_a310e566a8150c8307fc3cb423a74076
+
+[2025-01-16T03:30:57.350+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.merge_location_to_main, execution_date=20250116T032921, start_date=20250116T033053, end_date=20250116T033057
+[2025-01-16T03:30:57.529+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 1838 for task load_to_gcs_bq.merge_location_to_main (400 Query error: Value of type INT64 cannot be assigned to T.created_at, which has type TIMESTAMP at [50:24]
+
+Location: us-central1
+Job ID: airflow_1736998255317600_a310e566a8150c8307fc3cb423a74076
+; 917)
+[2025-01-16T03:30:57.626+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-16T03:30:58.238+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

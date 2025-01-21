@@ -1,0 +1,33 @@
+[2025-01-13T14:57:43.157+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_account_data manual__2025-01-13T14:57:29.132793+00:00 [queued]>
+[2025-01-13T14:57:43.287+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_account_data manual__2025-01-13T14:57:29.132793+00:00 [queued]>
+[2025-01-13T14:57:43.294+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-13T14:57:43.528+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): generate_account_data> on 2025-01-13 14:57:29.132793+00:00
+[2025-01-13T14:57:43.593+0000] {standard_task_runner.py:57} INFO - Started process 3797 to run task
+[2025-01-13T14:57:43.670+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'generate_account_data', 'manual__2025-01-13T14:57:29.132793+00:00', '--job-id', '331', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpe9rwmy86']
+[2025-01-13T14:57:43.737+0000] {standard_task_runner.py:85} INFO - Job 331: Subtask generate_account_data
+[2025-01-13T14:57:44.238+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.generate_account_data manual__2025-01-13T14:57:29.132793+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T14:57:45.034+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='generate_account_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T14:57:29.132793+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T14:57:29.132793+00:00'
+[2025-01-13T14:57:45.039+0000] {finflow.py:68} INFO - Starting data generation for generate_account_data
+[2025-01-13T14:57:45.602+0000] {finflow.py:73} ERROR - Error in data generation for generate_account_data: 'NoneType' object is not iterable
+[2025-01-13T14:57:45.603+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/finflow.py", line 69, in wrapper
+    result = func(*args, **kwargs)
+  File "/opt/airflow/dags/finflow.py", line 309, in generate_account_data
+    for customer_key in customer_keys:
+TypeError: 'NoneType' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/finflow.py", line 74, in wrapper
+    raise DataGenerationError(f"Failed to generate data in {func.__name__}: {str(e)}")
+unusual_prefix_e3732bef98af2b043177fdcca303303d50b4bb69_finflow.DataGenerationError: Failed to generate data in generate_account_data: 'NoneType' object is not iterable
+[2025-01-13T14:57:45.633+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=finflow_source_data_pipeline, task_id=generate_account_data, execution_date=20250113T145729, start_date=20250113T145743, end_date=20250113T145745
+[2025-01-13T14:57:45.672+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 331 for task generate_account_data (Failed to generate data in generate_account_data: 'NoneType' object is not iterable; 3797)
+[2025-01-13T14:57:45.759+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-13T14:57:46.280+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

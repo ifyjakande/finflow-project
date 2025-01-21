@@ -1,0 +1,127 @@
+[0m21:56:45.622467 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f468fc81bd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f468f6e7510>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f468f8be7d0>]}
+
+
+============================== 21:56:45.626442 | 7a5b10d2-ad42-445a-9602-12f92afa9337 ==============================
+[0m21:56:45.626442 [info ] [MainThread]: Running with dbt=1.9.1
+[0m21:56:45.627360 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'profiles', 'version_check': 'True', 'debug': 'False', 'log_path': 'logs', 'warn_error': 'None', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'introspect': 'True', 'static_parser': 'True', 'invocation_command': 'dbt init finflow --profiles-dir profiles', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m21:56:45.637972 [debug] [MainThread]: Starter project path: /home/charisgrace30/airflow-finflow-project/dbt/dbt-env/lib/python3.11/site-packages/dbt/include/starter_project
+[0m21:56:45.641946 [info ] [MainThread]: 
+Your new dbt project "finflow" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m21:56:45.642942 [info ] [MainThread]: Setting up your profile.
+[0m21:59:54.572165 [error] [MainThread]: Encountered an error:
+[Errno 2] No such file or directory: 'profiles/profiles.yml'
+[0m21:59:54.575226 [error] [MainThread]: Traceback (most recent call last):
+  File "/home/charisgrace30/airflow-finflow-project/dbt/dbt-env/lib/python3.11/site-packages/dbt/cli/requires.py", line 153, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charisgrace30/airflow-finflow-project/dbt/dbt-env/lib/python3.11/site-packages/dbt/cli/requires.py", line 103, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/charisgrace30/airflow-finflow-project/dbt/dbt-env/lib/python3.11/site-packages/dbt/cli/main.py", line 477, in init
+    results = task.run()
+              ^^^^^^^^^^
+  File "/home/charisgrace30/airflow-finflow-project/dbt/dbt-env/lib/python3.11/site-packages/dbt/task/init.py", line 346, in run
+    self.setup_profile(profile_name)
+  File "/home/charisgrace30/airflow-finflow-project/dbt/dbt-env/lib/python3.11/site-packages/dbt/task/init.py", line 262, in setup_profile
+    self.create_profile_from_target(adapter, profile_name=profile_name)
+  File "/home/charisgrace30/airflow-finflow-project/dbt/dbt-env/lib/python3.11/site-packages/dbt/task/init.py", line 179, in create_profile_from_target
+    self.create_profile_from_profile_template(profile_template, profile_name)
+  File "/home/charisgrace30/airflow-finflow-project/dbt/dbt-env/lib/python3.11/site-packages/dbt/task/init.py", line 166, in create_profile_from_profile_template
+    self.write_profile(profile, profile_name)
+  File "/home/charisgrace30/airflow-finflow-project/dbt/dbt-env/lib/python3.11/site-packages/dbt/task/init.py", line 156, in write_profile
+    with open(profiles_filepath, "w") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'profiles/profiles.yml'
+
+[0m21:59:54.578890 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": false, "command_wall_clock_time": 189.02368, "process_in_blocks": "40", "process_kernel_time": 0.459095, "process_mem_max_rss": "208472", "process_out_blocks": "80", "process_user_time": 2.457506}
+[0m21:59:54.579952 [debug] [MainThread]: Command `dbt init` failed at 21:59:54.579720 after 189.03 seconds
+[0m21:59:54.580827 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f468f6fff50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f468f6ffe90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f468fc81cd0>]}
+[0m21:59:54.581543 [debug] [MainThread]: Flushing usage events
+[0m21:59:54.730590 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m22:06:44.159122 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2b4fd1b150>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2b50197090>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2b4fcc9f10>]}
+
+
+============================== 22:06:44.163289 | c835424b-7e6a-4dd3-beb7-21508194c233 ==============================
+[0m22:06:44.163289 [info ] [MainThread]: Running with dbt=1.9.1
+[0m22:06:44.164204 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'profiles', 'fail_fast': 'False', 'version_check': 'True', 'log_path': 'logs', 'warn_error': 'None', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'static_parser': 'True', 'log_format': 'default', 'target_path': 'None', 'invocation_command': 'dbt debug --profiles-dir profiles', 'send_anonymous_usage_stats': 'True'}
+[0m22:06:44.174701 [info ] [MainThread]: dbt version: 1.9.1
+[0m22:06:44.175420 [info ] [MainThread]: python version: 3.11.2
+[0m22:06:44.176034 [info ] [MainThread]: python path: /home/charisgrace30/airflow-finflow-project/dbt/dbt-env/bin/python3
+[0m22:06:44.176568 [info ] [MainThread]: os info: Linux-6.1.0-29-cloud-amd64-x86_64-with-glibc2.36
+[0m22:06:45.082034 [info ] [MainThread]: Using profiles dir at profiles
+[0m22:06:45.082886 [info ] [MainThread]: Using profiles.yml file at profiles/profiles.yml
+[0m22:06:45.083516 [info ] [MainThread]: Using dbt_project.yml file at /home/charisgrace30/airflow-finflow-project/dbt/dbt_project.yml
+[0m22:06:45.084088 [info ] [MainThread]: adapter type: bigquery
+[0m22:06:45.084613 [info ] [MainThread]: adapter version: 1.9.1
+[0m22:06:45.085168 [info ] [MainThread]: Configuration:
+[0m22:06:45.085685 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m22:06:45.086246 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m22:06:45.086796 [info ] [MainThread]: Required dependencies:
+[0m22:06:45.087371 [debug] [MainThread]: Executing "git --help"
+[0m22:06:45.092638 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--super-prefix=<path>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m22:06:45.093443 [debug] [MainThread]: STDERR: "b''"
+[0m22:06:45.094128 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m22:06:45.094780 [info ] [MainThread]: Connection:
+[0m22:06:45.095365 [info ] [MainThread]:   method: service-account
+[0m22:06:45.095906 [info ] [MainThread]:   database: finflow-analytics-production
+[0m22:06:45.096426 [info ] [MainThread]:   execution_project: finflow-analytics-production
+[0m22:06:45.096968 [info ] [MainThread]:   schema: finflow_data
+[0m22:06:45.097740 [info ] [MainThread]:   location: us-central1
+[0m22:06:45.098321 [info ] [MainThread]:   priority: interactive
+[0m22:06:45.098869 [info ] [MainThread]:   maximum_bytes_billed: None
+[0m22:06:45.099409 [info ] [MainThread]:   impersonate_service_account: None
+[0m22:06:45.100008 [info ] [MainThread]:   job_retry_deadline_seconds: None
+[0m22:06:45.100524 [info ] [MainThread]:   job_retries: 3
+[0m22:06:45.102695 [info ] [MainThread]:   job_creation_timeout_seconds: None
+[0m22:06:45.103650 [info ] [MainThread]:   job_execution_timeout_seconds: 300
+[0m22:06:45.105001 [info ] [MainThread]:   timeout_seconds: 300
+[0m22:06:45.105585 [info ] [MainThread]:   client_id: None
+[0m22:06:45.106237 [info ] [MainThread]:   token_uri: None
+[0m22:06:45.106912 [info ] [MainThread]:   dataproc_region: None
+[0m22:06:45.107580 [info ] [MainThread]:   dataproc_cluster_name: None
+[0m22:06:45.108202 [info ] [MainThread]:   gcs_bucket: None
+[0m22:06:45.108862 [info ] [MainThread]:   dataproc_batch: None
+[0m22:06:45.109785 [info ] [MainThread]: Registered adapter: bigquery=1.9.1
+[0m22:06:45.315177 [debug] [MainThread]: Acquiring new bigquery connection 'debug'
+[0m22:06:45.315822 [debug] [MainThread]: On debug: select 1 as id
+[0m22:06:45.316446 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m22:06:45.619267 [debug] [MainThread]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=finflow-analytics-production&j=bq:us-central1:651051da-7e42-4628-8b53-118fb29dc0c9&page=queryresults
+[0m22:06:45.895035 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m22:06:45.895905 [info ] [MainThread]: [31m1 check failed:[0m
+[0m22:06:45.896521 [info ] [MainThread]: Project loading failed for the following reason:
+ project path </home/charisgrace30/airflow-finflow-project/dbt/dbt_project.yml> not found
+
+[0m22:06:45.897904 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 1.8056359, "process_in_blocks": "272", "process_kernel_time": 0.450659, "process_mem_max_rss": "214932", "process_out_blocks": "16", "process_user_time": 2.675344}
+[0m22:06:45.898621 [debug] [MainThread]: Command `dbt debug` failed at 22:06:45.898453 after 1.81 seconds
+[0m22:06:45.899142 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m22:06:45.899698 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2b4fd21490>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2b53661950>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f2b3ad4a3d0>]}
+[0m22:06:45.900314 [debug] [MainThread]: Flushing usage events
+[0m22:06:46.048239 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m22:08:30.329748 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc17af23290>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc17af23190>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc17af23850>]}
+
+
+============================== 22:08:30.333784 | 81e5ffa1-a57c-4abb-a8a5-cc42b22e7f00 ==============================
+[0m22:08:30.333784 [info ] [MainThread]: Running with dbt=1.9.1
+[0m22:08:30.334731 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'profiles', 'version_check': 'True', 'warn_error': 'None', 'log_path': 'logs', 'debug': 'False', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'static_parser': 'True', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'invocation_command': 'dbt init finflow --profiles-dir profiles', 'send_anonymous_usage_stats': 'True'}
+[0m22:08:30.344893 [info ] [MainThread]: A project called finflow already exists here.
+[0m22:08:30.346377 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 0.08260454, "process_in_blocks": "0", "process_kernel_time": 0.271733, "process_mem_max_rss": "89968", "process_out_blocks": "8", "process_user_time": 1.561262}
+[0m22:08:30.347065 [debug] [MainThread]: Command `dbt init` succeeded at 22:08:30.346869 after 0.08 seconds
+[0m22:08:30.347623 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc17ccc5750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc17af3fd10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc17af3fb90>]}
+[0m22:08:30.348327 [debug] [MainThread]: Flushing usage events
+[0m22:08:30.501886 [debug] [MainThread]: An error was encountered while trying to flush usage events

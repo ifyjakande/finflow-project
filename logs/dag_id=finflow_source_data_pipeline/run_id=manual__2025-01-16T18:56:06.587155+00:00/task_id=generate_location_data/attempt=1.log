@@ -1,0 +1,15 @@
+[2025-01-16T18:56:33.961+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_location_data manual__2025-01-16T18:56:06.587155+00:00 [queued]>
+[2025-01-16T18:56:34.150+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_location_data manual__2025-01-16T18:56:06.587155+00:00 [queued]>
+[2025-01-16T18:56:34.151+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T18:56:34.357+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): generate_location_data> on 2025-01-16 18:56:06.587155+00:00
+[2025-01-16T18:56:34.429+0000] {standard_task_runner.py:57} INFO - Started process 934 to run task
+[2025-01-16T18:56:34.481+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'generate_location_data', 'manual__2025-01-16T18:56:06.587155+00:00', '--job-id', '2625', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpvm6_ee3j']
+[2025-01-16T18:56:34.527+0000] {standard_task_runner.py:85} INFO - Job 2625: Subtask generate_location_data
+[2025-01-16T18:56:35.021+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.generate_location_data manual__2025-01-16T18:56:06.587155+00:00 [running]> on host 1fa24e54c558
+[2025-01-16T18:56:36.228+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='generate_location_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T18:56:06.587155+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T18:56:06.587155+00:00'
+[2025-01-16T18:56:36.243+0000] {finflow.py:148} INFO - Starting data generation for generate_location_data
+[2025-01-16T18:56:39.600+0000] {finflow.py:150} INFO - Successfully completed data generation for generate_location_data
+[2025-01-16T18:56:39.625+0000] {python.py:194} INFO - Done. Returned value was: /tmp/tmpjspn4gh3/locations.parquet
+[2025-01-16T18:56:39.895+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=generate_location_data, execution_date=20250116T185606, start_date=20250116T185633, end_date=20250116T185639
+[2025-01-16T18:56:40.300+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-16T18:56:41.456+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

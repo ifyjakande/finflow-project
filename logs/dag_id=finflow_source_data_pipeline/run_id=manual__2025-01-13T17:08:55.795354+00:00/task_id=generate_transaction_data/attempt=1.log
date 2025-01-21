@@ -1,0 +1,36 @@
+[2025-01-13T17:09:24.526+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_transaction_data manual__2025-01-13T17:08:55.795354+00:00 [queued]>
+[2025-01-13T17:09:24.545+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_transaction_data manual__2025-01-13T17:08:55.795354+00:00 [queued]>
+[2025-01-13T17:09:24.546+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-13T17:09:24.575+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): generate_transaction_data> on 2025-01-13 17:08:55.795354+00:00
+[2025-01-13T17:09:24.586+0000] {standard_task_runner.py:57} INFO - Started process 8663 to run task
+[2025-01-13T17:09:24.599+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'generate_transaction_data', 'manual__2025-01-13T17:08:55.795354+00:00', '--job-id', '418', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmp4g_k6vv7']
+[2025-01-13T17:09:24.606+0000] {standard_task_runner.py:85} INFO - Job 418: Subtask generate_transaction_data
+[2025-01-13T17:09:24.717+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.generate_transaction_data manual__2025-01-13T17:08:55.795354+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T17:09:24.916+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='generate_transaction_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T17:08:55.795354+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T17:08:55.795354+00:00'
+[2025-01-13T17:09:24.918+0000] {finflow.py:76} INFO - Starting data generation for generate_transaction_data
+[2025-01-13T17:09:24.919+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/utils/context.py:314: AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+  warnings.warn(_create_deprecation_warning(k, replacements))
+
+[2025-01-13T17:09:25.043+0000] {finflow.py:81} ERROR - Error in data generation for generate_transaction_data: Missing required keys from XCom: date_keys
+[2025-01-13T17:09:25.044+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/finflow.py", line 77, in wrapper
+    result = func(*args, **kwargs)
+  File "/opt/airflow/dags/finflow.py", line 411, in generate_transaction_data
+    raise ValueError(f"Missing required keys from XCom: {', '.join(missing_keys)}")
+ValueError: Missing required keys from XCom: date_keys
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/finflow.py", line 82, in wrapper
+    raise DataGenerationError(f"Failed to generate data in {func.__name__}: {str(e)}")
+unusual_prefix_e3732bef98af2b043177fdcca303303d50b4bb69_finflow.DataGenerationError: Failed to generate data in generate_transaction_data: Missing required keys from XCom: date_keys
+[2025-01-13T17:09:25.064+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=finflow_source_data_pipeline, task_id=generate_transaction_data, execution_date=20250113T170855, start_date=20250113T170924, end_date=20250113T170925
+[2025-01-13T17:09:25.116+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 418 for task generate_transaction_data (Failed to generate data in generate_transaction_data: Missing required keys from XCom: date_keys; 8663)
+[2025-01-13T17:09:25.143+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-13T17:09:25.226+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,68 @@
+[2025-01-13T14:42:12.125+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_source_data manual__2025-01-13T14:41:59.895677+00:00 [queued]>
+[2025-01-13T14:42:12.179+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_source_data manual__2025-01-13T14:41:59.895677+00:00 [queued]>
+[2025-01-13T14:42:12.183+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-13T14:42:12.270+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): data_quality_checks.verify_source_data> on 2025-01-13 14:41:59.895677+00:00
+[2025-01-13T14:42:12.299+0000] {standard_task_runner.py:57} INFO - Started process 3150 to run task
+[2025-01-13T14:42:12.340+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'data_quality_checks.verify_source_data', 'manual__2025-01-13T14:41:59.895677+00:00', '--job-id', '291', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpegikd8_h']
+[2025-01-13T14:42:12.398+0000] {standard_task_runner.py:85} INFO - Job 291: Subtask data_quality_checks.verify_source_data
+[2025-01-13T14:42:12.675+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_source_data manual__2025-01-13T14:41:59.895677+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T14:42:13.150+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='data_quality_checks.verify_source_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T14:41:59.895677+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T14:41:59.895677+00:00'
+[2025-01-13T14:42:13.152+0000] {bigquery.py:1241} INFO - Executing: 
+            WITH source_counts AS (
+                SELECT 'dates' as table_name, COUNT(*) as record_count 
+                FROM `finflow-analytics-production.finflow_raw.src_dates`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+                
+                UNION ALL
+                
+                SELECT 'customers' as table_name, COUNT(*) as record_count
+                FROM `finflow-analytics-production.finflow_raw.src_customers`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+                
+                UNION ALL
+                
+                SELECT 'products' as table_name, COUNT(*) as record_count
+                FROM `finflow-analytics-production.finflow_raw.src_products`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+                
+                UNION ALL
+                
+                SELECT 'locations' as table_name, COUNT(*) as record_count
+                FROM `finflow-analytics-production.finflow_raw.src_locations`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+                
+                UNION ALL
+                
+                SELECT 'accounts' as table_name, COUNT(*) as record_count
+                FROM `finflow-analytics-production.finflow_raw.src_accounts`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+                
+                UNION ALL
+                
+                SELECT 'transactions' as table_name, COUNT(*) as record_count
+                FROM `finflow-analytics-production.finflow_raw.src_transactions`
+                WHERE DATE(ingestion_timestamp) = DATE('2025-01-13')
+        )
+            SELECT 
+                CASE 
+                    WHEN EXISTS (
+                        SELECT 1 
+                        FROM source_counts 
+                        WHERE record_count = 0
+                    ) THEN ERROR('Zero records found in one or more tables: ' ||
+                               STRING_AGG(IF(record_count = 0, table_name, NULL), ', '))
+                    ELSE 'Data generation completed successfully. Record counts: ' ||
+                         STRING_AGG(table_name || ': ' || CAST(record_count AS STRING), ', ')
+                END as validation_result
+            FROM source_counts
+            
+[2025-01-13T14:42:13.154+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-13T14:42:13.155+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-13T14:42:13.156+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-13T14:42:13.167+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-13T14:42:13.488+0000] {bigquery.py:1595} INFO - Inserting job ***_1736779333480568_c7155029a395f2077fec5ad3149b79db
+[2025-01-13T14:42:14.914+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=data_quality_checks.verify_source_data, execution_date=20250113T144159, start_date=20250113T144212, end_date=20250113T144214
+[2025-01-13T14:42:15.053+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-13T14:42:15.116+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

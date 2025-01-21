@@ -1,0 +1,37 @@
+[2025-01-16T17:50:58.448+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_date_timestamps manual__2025-01-16T17:49:36.658563+00:00 [queued]>
+[2025-01-16T17:50:58.648+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_date_timestamps manual__2025-01-16T17:49:36.658563+00:00 [queued]>
+[2025-01-16T17:50:58.674+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T17:50:58.887+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): load_to_gcs_bq.transform_date_timestamps> on 2025-01-16 17:49:36.658563+00:00
+[2025-01-16T17:50:58.973+0000] {standard_task_runner.py:57} INFO - Started process 4463 to run task
+[2025-01-16T17:50:59.029+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.transform_date_timestamps', 'manual__2025-01-16T17:49:36.658563+00:00', '--job-id', '2368', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpekxx1y5f']
+[2025-01-16T17:50:59.087+0000] {standard_task_runner.py:85} INFO - Job 2368: Subtask load_to_gcs_bq.transform_date_timestamps
+[2025-01-16T17:50:59.682+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_date_timestamps manual__2025-01-16T17:49:36.658563+00:00 [running]> on host e65a9a79c958
+[2025-01-16T17:51:00.616+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.transform_date_timestamps' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T17:49:36.658563+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T17:49:36.658563+00:00'
+[2025-01-16T17:51:00.619+0000] {bigquery.py:1241} INFO - Executing: 
+                    CREATE OR REPLACE TABLE `finflow-analytics-production.finflow_data.src_dates_temp` AS
+                    SELECT 
+                        date_key,
+                        full_date,
+                        year,
+                        quarter,
+                        month,
+                        day,
+                        day_of_week,
+                        is_weekend,
+                        is_holiday,
+                        fiscal_year,
+                        TIMESTAMP(created_at) as created_at,
+                        TIMESTAMP(updated_at) as updated_at,
+                        TIMESTAMP(ingestion_timestamp) as ingestion_timestamp
+                    FROM `finflow-analytics-production.finflow_data.src_dates_temp`
+                    
+[2025-01-16T17:51:00.656+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-16T17:51:00.657+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-16T17:51:00.688+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-16T17:51:00.718+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-16T17:51:02.164+0000] {bigquery.py:1595} INFO - Inserting job ***_1737049862123052_4f68c4ef120c65be42dd232617f4320f
+[2025-01-16T17:51:07.298+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.transform_date_timestamps, execution_date=20250116T174936, start_date=20250116T175058, end_date=20250116T175107
+[2025-01-16T17:51:07.481+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-16T17:51:07.766+0000] {taskinstance.py:2778} INFO - 1 downstream tasks scheduled from follow-on schedule check

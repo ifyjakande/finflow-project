@@ -1,0 +1,15 @@
+[2025-01-16T01:27:24.252+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_product_data manual__2025-01-16T01:26:46.749927+00:00 [queued]>
+[2025-01-16T01:27:24.643+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_product_data manual__2025-01-16T01:26:46.749927+00:00 [queued]>
+[2025-01-16T01:27:24.651+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T01:27:25.301+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): generate_product_data> on 2025-01-16 01:26:46.749927+00:00
+[2025-01-16T01:27:25.603+0000] {standard_task_runner.py:57} INFO - Started process 195 to run task
+[2025-01-16T01:27:25.639+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'generate_product_data', 'manual__2025-01-16T01:26:46.749927+00:00', '--job-id', '1346', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpvzi1yiw7']
+[2025-01-16T01:27:25.781+0000] {standard_task_runner.py:85} INFO - Job 1346: Subtask generate_product_data
+[2025-01-16T01:27:27.147+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.generate_product_data manual__2025-01-16T01:26:46.749927+00:00 [running]> on host 28a708653ecc
+[2025-01-16T01:27:28.684+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='generate_product_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T01:26:46.749927+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T01:26:46.749927+00:00'
+[2025-01-16T01:27:28.695+0000] {finflow.py:148} INFO - Starting data generation for generate_product_data
+[2025-01-16T01:27:30.166+0000] {finflow.py:150} INFO - Successfully completed data generation for generate_product_data
+[2025-01-16T01:27:30.167+0000] {python.py:194} INFO - Done. Returned value was: /tmp/tmplrna5yu6/products.parquet
+[2025-01-16T01:27:30.323+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=generate_product_data, execution_date=20250116T012646, start_date=20250116T012724, end_date=20250116T012730
+[2025-01-16T01:27:30.632+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-16T01:27:31.656+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,20 @@
+[2025-01-13T20:54:41.463+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.cleanup_customer_temp manual__2025-01-13T20:52:53.399336+00:00 [queued]>
+[2025-01-13T20:54:41.630+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.cleanup_customer_temp manual__2025-01-13T20:52:53.399336+00:00 [queued]>
+[2025-01-13T20:54:41.643+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-13T20:54:41.814+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): load_to_gcs_bq.cleanup_customer_temp> on 2025-01-13 20:52:53.399336+00:00
+[2025-01-13T20:54:41.865+0000] {standard_task_runner.py:57} INFO - Started process 18211 to run task
+[2025-01-13T20:54:41.900+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.cleanup_customer_temp', 'manual__2025-01-13T20:52:53.399336+00:00', '--job-id', '1030', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpq9jzzamt']
+[2025-01-13T20:54:41.935+0000] {standard_task_runner.py:85} INFO - Job 1030: Subtask load_to_gcs_bq.cleanup_customer_temp
+[2025-01-13T20:54:42.258+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.cleanup_customer_temp manual__2025-01-13T20:52:53.399336+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T20:54:42.900+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.cleanup_customer_temp' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T20:52:53.399336+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T20:52:53.399336+00:00'
+[2025-01-13T20:54:42.904+0000] {bigquery.py:1241} INFO - Executing: DROP TABLE IF EXISTS `finflow-analytics-production.finflow_data.src_customers_temp`
+[2025-01-13T20:54:42.912+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-13T20:54:42.922+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-13T20:54:42.926+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-13T20:54:42.934+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-13T20:54:43.432+0000] {bigquery.py:1595} INFO - Inserting job ***_1736801683424560_95a8e1650f23f0597e98ef897d1887a0
+[2025-01-13T20:54:44.264+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.cleanup_customer_temp, execution_date=20250113T205253, start_date=20250113T205441, end_date=20250113T205444
+[2025-01-13T20:54:44.420+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-13T20:54:44.562+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

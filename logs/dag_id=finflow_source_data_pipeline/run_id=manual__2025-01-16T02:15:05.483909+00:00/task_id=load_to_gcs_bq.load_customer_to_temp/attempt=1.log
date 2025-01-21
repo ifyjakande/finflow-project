@@ -1,0 +1,18 @@
+[2025-01-16T02:16:12.888+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.load_customer_to_temp manual__2025-01-16T02:15:05.483909+00:00 [queued]>
+[2025-01-16T02:16:13.022+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.load_customer_to_temp manual__2025-01-16T02:15:05.483909+00:00 [queued]>
+[2025-01-16T02:16:13.026+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T02:16:13.196+0000] {taskinstance.py:1382} INFO - Executing <Task(GCSToBigQueryOperator): load_to_gcs_bq.load_customer_to_temp> on 2025-01-16 02:15:05.483909+00:00
+[2025-01-16T02:16:13.309+0000] {standard_task_runner.py:57} INFO - Started process 1975 to run task
+[2025-01-16T02:16:13.342+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.load_customer_to_temp', 'manual__2025-01-16T02:15:05.483909+00:00', '--job-id', '1565', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpj313iqeh']
+[2025-01-16T02:16:13.383+0000] {standard_task_runner.py:85} INFO - Job 1565: Subtask load_to_gcs_bq.load_customer_to_temp
+[2025-01-16T02:16:13.765+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.load_customer_to_temp manual__2025-01-16T02:15:05.483909+00:00 [running]> on host a445abefd56a
+[2025-01-16T02:16:14.231+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.load_customer_to_temp' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T02:15:05.483909+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T02:15:05.483909+00:00'
+[2025-01-16T02:16:14.242+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-16T02:16:14.243+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-16T02:16:14.244+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-16T02:16:14.246+0000] {gcs_to_bigquery.py:376} INFO - Using existing BigQuery table for storing data...
+[2025-01-16T02:16:14.878+0000] {gcs_to_bigquery.py:380} INFO - Executing: {'load': {'autodetect': True, 'createDisposition': 'CREATE_IF_NEEDED', 'destinationTable': {'projectId': 'finflow-analytics-production', 'datasetId': 'finflow_data', 'tableId': 'src_customers_temp'}, 'sourceFormat': 'PARQUET', 'sourceUris': ['gs://finflow-analytics-data/raw/customers/2025-01-16/customers.parquet'], 'writeDisposition': 'WRITE_TRUNCATE', 'ignoreUnknownValues': False}}
+[2025-01-16T02:16:14.880+0000] {bigquery.py:1595} INFO - Inserting job ***_finflow_source_data_pipeline_load_to_gcs_bq_load_customer_to_temp_2025_01_16T02_15_05_483909_00_00_a1d181fe7c01c2fce13910799cd46ecd
+[2025-01-16T02:16:22.862+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.load_customer_to_temp, execution_date=20250116T021505, start_date=20250116T021612, end_date=20250116T021622
+[2025-01-16T02:16:23.083+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-16T02:16:23.543+0000] {taskinstance.py:2778} INFO - 1 downstream tasks scheduled from follow-on schedule check

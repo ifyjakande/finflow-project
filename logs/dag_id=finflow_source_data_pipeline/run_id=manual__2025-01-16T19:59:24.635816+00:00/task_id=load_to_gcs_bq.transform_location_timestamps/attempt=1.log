@@ -1,0 +1,42 @@
+[2025-01-16T20:01:19.429+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_location_timestamps manual__2025-01-16T19:59:24.635816+00:00 [queued]>
+[2025-01-16T20:01:19.640+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_location_timestamps manual__2025-01-16T19:59:24.635816+00:00 [queued]>
+[2025-01-16T20:01:19.642+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T20:01:19.970+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): load_to_gcs_bq.transform_location_timestamps> on 2025-01-16 19:59:24.635816+00:00
+[2025-01-16T20:01:20.097+0000] {standard_task_runner.py:57} INFO - Started process 2524 to run task
+[2025-01-16T20:01:20.179+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.transform_location_timestamps', 'manual__2025-01-16T19:59:24.635816+00:00', '--job-id', '2894', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmplbfdw1rr']
+[2025-01-16T20:01:20.205+0000] {standard_task_runner.py:85} INFO - Job 2894: Subtask load_to_gcs_bq.transform_location_timestamps
+[2025-01-16T20:01:20.678+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_location_timestamps manual__2025-01-16T19:59:24.635816+00:00 [running]> on host c35fc3f5a87d
+[2025-01-16T20:01:21.548+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.transform_location_timestamps' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T19:59:24.635816+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T19:59:24.635816+00:00'
+[2025-01-16T20:01:21.552+0000] {bigquery.py:1241} INFO - Executing: 
+                    CREATE OR REPLACE TABLE `finflow-analytics-production.finflow_data.src_locations_temp` AS
+                    SELECT 
+                        location_key,
+                        location_id,
+                        location_name,
+                        address,
+                        city,
+                        state,
+                        region,
+                        country,
+                        country_name,
+                        country_code,
+                        currency_code,
+                        postal_code,
+                        timezone,
+                        latitude,
+                        longitude,
+                        created_at,
+                        updated_at,
+                        ingestion_timestamp
+                    FROM `finflow-analytics-production.finflow_data.src_locations_temp`
+                    
+[2025-01-16T20:01:21.582+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-16T20:01:21.588+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-16T20:01:21.596+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-16T20:01:21.619+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-16T20:01:22.318+0000] {bigquery.py:1595} INFO - Inserting job ***_1737057682317504_790ae7024c2a65e13d90419a8821278d
+[2025-01-16T20:01:25.025+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.transform_location_timestamps, execution_date=20250116T195924, start_date=20250116T200119, end_date=20250116T200125
+[2025-01-16T20:01:25.612+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-16T20:01:26.076+0000] {taskinstance.py:2778} INFO - 1 downstream tasks scheduled from follow-on schedule check

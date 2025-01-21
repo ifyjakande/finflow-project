@@ -1,0 +1,68 @@
+[2025-01-17T15:12:09.372+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_referential_integrity manual__2025-01-17T15:09:47.063748+00:00 [queued]>
+[2025-01-17T15:12:09.396+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_referential_integrity manual__2025-01-17T15:09:47.063748+00:00 [queued]>
+[2025-01-17T15:12:09.397+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-17T15:12:09.432+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): data_quality_checks.verify_referential_integrity> on 2025-01-17 15:09:47.063748+00:00
+[2025-01-17T15:12:09.452+0000] {standard_task_runner.py:57} INFO - Started process 1672 to run task
+[2025-01-17T15:12:09.465+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'data_quality_checks.verify_referential_integrity', 'manual__2025-01-17T15:09:47.063748+00:00', '--job-id', '3354', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmp0pxn895d']
+[2025-01-17T15:12:09.488+0000] {standard_task_runner.py:85} INFO - Job 3354: Subtask data_quality_checks.verify_referential_integrity
+[2025-01-17T15:12:09.663+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_referential_integrity manual__2025-01-17T15:09:47.063748+00:00 [running]> on host 9b2833750dff
+[2025-01-17T15:12:09.877+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='data_quality_checks.verify_referential_integrity' AIRFLOW_CTX_EXECUTION_DATE='2025-01-17T15:09:47.063748+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-17T15:09:47.063748+00:00'
+[2025-01-17T15:12:09.880+0000] {bigquery.py:1241} INFO - Executing: 
+WITH integrity_checks AS (
+    -- Check customer references
+    SELECT 'Invalid customer reference in accounts' as check_name,
+    COUNT(*) as invalid_count
+    FROM `finflow-analytics-production.finflow_data.src_accounts` a
+    LEFT JOIN `finflow-analytics-production.finflow_data.src_customers` c
+    ON a.customer_key = c.customer_key
+    WHERE c.customer_key IS NULL
+    
+    UNION ALL
+    
+    -- Check product references
+    SELECT 'Invalid product reference in accounts',
+    COUNT(*)
+    FROM `finflow-analytics-production.finflow_data.src_accounts` a
+    LEFT JOIN `finflow-analytics-production.finflow_data.src_products` p
+    ON a.product_key = p.product_key
+    WHERE p.product_key IS NULL
+    
+    UNION ALL
+    
+    -- Check account references in transactions
+    SELECT 'Invalid account reference in transactions',
+    COUNT(*)
+    FROM `finflow-analytics-production.finflow_data.src_transactions` t
+    LEFT JOIN `finflow-analytics-production.finflow_data.src_accounts` a
+    ON t.account_key = a.account_key
+    WHERE a.account_key IS NULL
+    
+    UNION ALL
+    
+    -- Check location references in transactions
+    SELECT 'Invalid location reference in transactions',
+    COUNT(*)
+    FROM `finflow-analytics-production.finflow_data.src_transactions` t
+    LEFT JOIN `finflow-analytics-production.finflow_data.src_locations` l
+    ON t.location_key = l.location_key
+    WHERE l.location_key IS NULL
+)
+SELECT
+    CASE 
+        WHEN MAX(invalid_count) > 0 THEN
+            ERROR(CONCAT('Referential integrity violation found: ', 
+                  STRING_AGG(CONCAT(check_name, ': ', CAST(invalid_count AS STRING)), '; ')))
+        ELSE 'All referential integrity checks passed'
+    END as validation_result
+FROM integrity_checks
+WHERE invalid_count > 0;
+[2025-01-17T15:12:09.883+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-17T15:12:09.887+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-17T15:12:09.889+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-17T15:12:09.893+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-17T15:12:09.992+0000] {bigquery.py:1595} INFO - Inserting job ***_1737126729991538_7bdeed896916e2207fd2b4577e71b47e
+[2025-01-17T15:12:10.782+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=data_quality_checks.verify_referential_integrity, execution_date=20250117T150947, start_date=20250117T151209, end_date=20250117T151210
+[2025-01-17T15:12:10.855+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-17T15:12:10.963+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

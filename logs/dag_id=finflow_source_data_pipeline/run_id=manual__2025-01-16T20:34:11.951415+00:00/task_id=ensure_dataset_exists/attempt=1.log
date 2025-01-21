@@ -1,0 +1,15 @@
+[2025-01-16T20:34:20.794+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.ensure_dataset_exists manual__2025-01-16T20:34:11.951415+00:00 [queued]>
+[2025-01-16T20:34:20.821+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.ensure_dataset_exists manual__2025-01-16T20:34:11.951415+00:00 [queued]>
+[2025-01-16T20:34:20.822+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 4
+[2025-01-16T20:34:20.858+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): ensure_dataset_exists> on 2025-01-16 20:34:11.951415+00:00
+[2025-01-16T20:34:20.877+0000] {standard_task_runner.py:57} INFO - Started process 3956 to run task
+[2025-01-16T20:34:20.902+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'ensure_dataset_exists', 'manual__2025-01-16T20:34:11.951415+00:00', '--job-id', '3003', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpfk5uq0bu']
+[2025-01-16T20:34:20.914+0000] {standard_task_runner.py:85} INFO - Job 3003: Subtask ensure_dataset_exists
+[2025-01-16T20:34:21.060+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.ensure_dataset_exists manual__2025-01-16T20:34:11.951415+00:00 [running]> on host c35fc3f5a87d
+[2025-01-16T20:34:21.253+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='ensure_dataset_exists' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T20:34:11.951415+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T20:34:11.951415+00:00'
+[2025-01-16T20:34:21.729+0000] {logging_mixin.py:154} INFO - Dataset finflow-analytics-production.finflow_data already exists
+[2025-01-16T20:34:21.924+0000] {logging_mixin.py:154} INFO - Successfully verified dataset finflow-analytics-production.finflow_data exists
+[2025-01-16T20:34:21.925+0000] {python.py:194} INFO - Done. Returned value was: True
+[2025-01-16T20:34:21.983+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=ensure_dataset_exists, execution_date=20250116T203411, start_date=20250116T203420, end_date=20250116T203421
+[2025-01-16T20:34:22.050+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-16T20:34:22.260+0000] {taskinstance.py:2778} INFO - 4 downstream tasks scheduled from follow-on schedule check

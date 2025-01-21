@@ -1,0 +1,52 @@
+[2025-01-16T19:23:39.024+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_merge_results_transaction manual__2025-01-16T19:20:43.724287+00:00 [queued]>
+[2025-01-16T19:23:39.500+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_merge_results_transaction manual__2025-01-16T19:20:43.724287+00:00 [queued]>
+[2025-01-16T19:23:39.508+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T19:23:39.732+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): data_quality_checks.verify_merge_results_transaction> on 2025-01-16 19:20:43.724287+00:00
+[2025-01-16T19:23:39.889+0000] {standard_task_runner.py:57} INFO - Started process 902 to run task
+[2025-01-16T19:23:40.011+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'data_quality_checks.verify_merge_results_transaction', 'manual__2025-01-16T19:20:43.724287+00:00', '--job-id', '2764', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpddnokb8i']
+[2025-01-16T19:23:40.159+0000] {standard_task_runner.py:85} INFO - Job 2764: Subtask data_quality_checks.verify_merge_results_transaction
+[2025-01-16T19:23:41.128+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.data_quality_checks.verify_merge_results_transaction manual__2025-01-16T19:20:43.724287+00:00 [running]> on host c35fc3f5a87d
+[2025-01-16T19:23:42.863+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='data_quality_checks.verify_merge_results_transaction' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T19:20:43.724287+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T19:20:43.724287+00:00'
+[2025-01-16T19:23:42.882+0000] {bigquery.py:1241} INFO - Executing: 
+WITH pre_counts AS (
+    SELECT 
+        'transactions' as table_name,
+        COUNT(*) as pre_merge_count
+    FROM `finflow-analytics-production.finflow_data.src_transactions`
+    WHERE DATE(ingestion_timestamp) < DATE('2025-01-16')
+),
+post_counts AS (
+    SELECT 
+        'transactions' as table_name,
+        COUNT(*) as post_merge_count
+    FROM `finflow-analytics-production.finflow_data.src_transactions`
+    WHERE DATE(ingestion_timestamp) <= DATE('2025-01-16')
+),
+new_records AS (
+    SELECT 
+        'transactions' as table_name,
+        COUNT(*) as new_record_count
+    FROM `finflow-analytics-production.finflow_data.src_transactions`
+    WHERE DATE(ingestion_timestamp) = DATE('2025-01-16')
+)
+SELECT
+    CASE 
+        WHEN post_counts.post_merge_count < pre_counts.pre_merge_count 
+        THEN ERROR('Data loss detected in transactions table')
+        WHEN post_counts.post_merge_count - pre_counts.pre_merge_count != new_records.new_record_count
+        THEN ERROR('Unexpected record count after merge in transactions table')
+        ELSE 'Merge validation successful for transactions table'
+    END as validation_result
+FROM pre_counts
+JOIN post_counts ON pre_counts.table_name = post_counts.table_name
+JOIN new_records ON pre_counts.table_name = new_records.table_name
+[2025-01-16T19:23:42.901+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-16T19:23:42.920+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-16T19:23:42.945+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-16T19:23:42.985+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-16T19:23:44.284+0000] {bigquery.py:1595} INFO - Inserting job ***_1737055424227136_70da16ed807e6df0b6b252cbb151e494
+[2025-01-16T19:23:46.416+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=data_quality_checks.verify_merge_results_transaction, execution_date=20250116T192043, start_date=20250116T192339, end_date=20250116T192346
+[2025-01-16T19:23:46.907+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-16T19:23:47.080+0000] {taskinstance.py:2778} INFO - 1 downstream tasks scheduled from follow-on schedule check

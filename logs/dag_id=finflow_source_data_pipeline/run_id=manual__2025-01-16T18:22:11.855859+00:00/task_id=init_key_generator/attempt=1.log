@@ -1,0 +1,49 @@
+[2025-01-16T18:22:15.947+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.init_key_generator manual__2025-01-16T18:22:11.855859+00:00 [queued]>
+[2025-01-16T18:22:15.980+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.init_key_generator manual__2025-01-16T18:22:11.855859+00:00 [queued]>
+[2025-01-16T18:22:15.981+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T18:22:16.033+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): init_key_generator> on 2025-01-16 18:22:11.855859+00:00
+[2025-01-16T18:22:16.056+0000] {standard_task_runner.py:57} INFO - Started process 5909 to run task
+[2025-01-16T18:22:16.104+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'init_key_generator', 'manual__2025-01-16T18:22:11.855859+00:00', '--job-id', '2525', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpf7nfl7g4']
+[2025-01-16T18:22:16.122+0000] {standard_task_runner.py:85} INFO - Job 2525: Subtask init_key_generator
+[2025-01-16T18:22:16.356+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.init_key_generator manual__2025-01-16T18:22:11.855859+00:00 [running]> on host e65a9a79c958
+[2025-01-16T18:22:16.837+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='init_key_generator' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T18:22:11.855859+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T18:22:11.855859+00:00'
+[2025-01-16T18:22:16.862+0000] {bigquery.py:1241} INFO - Executing: 
+            SELECT
+                MAX(CASE WHEN table_name = 'customers' THEN max_key ELSE 0 END) as customer_max,
+                MAX(CASE WHEN table_name = 'products' THEN max_key ELSE 0 END) as product_max,
+                MAX(CASE WHEN table_name = 'locations' THEN max_key ELSE 0 END) as location_max,
+                MAX(CASE WHEN table_name = 'accounts' THEN max_key ELSE 0 END) as account_max,
+                MAX(CASE WHEN table_name = 'transactions' THEN max_key ELSE 0 END) as transaction_max
+            FROM (
+                SELECT 'customers' as table_name, COALESCE(MAX(customer_key), 0) as max_key 
+                FROM `finflow-analytics-production.finflow_data.src_customers`
+                UNION ALL
+                SELECT 'products', COALESCE(MAX(product_key), 0)
+                FROM `finflow-analytics-production.finflow_data.src_products`
+                UNION ALL
+                SELECT 'locations', COALESCE(MAX(location_key), 0)
+                FROM `finflow-analytics-production.finflow_data.src_locations`
+                UNION ALL
+                SELECT 'accounts', COALESCE(MAX(account_key), 0)
+                FROM `finflow-analytics-production.finflow_data.src_accounts`
+                UNION ALL
+                SELECT 'transactions', COALESCE(MAX(transaction_key), 0)
+                FROM `finflow-analytics-production.finflow_data.src_transactions`
+            )
+            
+[2025-01-16T18:22:16.885+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-16T18:22:16.886+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-16T18:22:16.888+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-16T18:22:16.890+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-16T18:22:17.166+0000] {bigquery.py:1595} INFO - Inserting job ***_1737051737165200_9774d81169b19edf1a7ba16232bd3c0a
+[2025-01-16T18:22:17.781+0000] {finflow.py:126} WARNING - Failed to get max keys, starting from 1: 400 Unrecognized name: transaction_key; Did you mean transaction_id? at [21:53]
+
+Location: us-central1
+Job ID: ***_1737051737165200_9774d81169b19edf1a7ba16232bd3c0a
+
+[2025-01-16T18:22:17.782+0000] {python.py:194} INFO - Done. Returned value was: None
+[2025-01-16T18:22:17.823+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=init_key_generator, execution_date=20250116T182211, start_date=20250116T182215, end_date=20250116T182217
+[2025-01-16T18:22:17.934+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-16T18:22:18.514+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,67 @@
+[2025-01-16T17:32:29.919+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_account_timestamps manual__2025-01-16T17:30:57.408098+00:00 [queued]>
+[2025-01-16T17:32:30.075+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_account_timestamps manual__2025-01-16T17:30:57.408098+00:00 [queued]>
+[2025-01-16T17:32:30.077+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T17:32:30.181+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): load_to_gcs_bq.transform_account_timestamps> on 2025-01-16 17:30:57.408098+00:00
+[2025-01-16T17:32:30.208+0000] {standard_task_runner.py:57} INFO - Started process 3526 to run task
+[2025-01-16T17:32:30.252+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.transform_account_timestamps', 'manual__2025-01-16T17:30:57.408098+00:00', '--job-id', '2248', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpy7g47x04']
+[2025-01-16T17:32:30.271+0000] {standard_task_runner.py:85} INFO - Job 2248: Subtask load_to_gcs_bq.transform_account_timestamps
+[2025-01-16T17:32:30.498+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_account_timestamps manual__2025-01-16T17:30:57.408098+00:00 [running]> on host e65a9a79c958
+[2025-01-16T17:32:30.915+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.transform_account_timestamps' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T17:30:57.408098+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T17:30:57.408098+00:00'
+[2025-01-16T17:32:30.918+0000] {bigquery.py:1241} INFO - Executing: 
+                    CREATE OR REPLACE TABLE `finflow-analytics-production.finflow_data.src_accounts_temp` AS
+                    SELECT 
+                        account_key,
+                        account_id,
+                        customer_key,
+                        account_type,
+                        account_status,
+                        balance,
+                        currency,
+                        interest_rate,
+                        credit_limit,
+                        opened_date,
+                        closed_date,
+                        is_active,
+                        TIMESTAMP(created_at) as created_at,
+                        TIMESTAMP(updated_at) as updated_at,
+                        TIMESTAMP(ingestion_timestamp) as ingestion_timestamp
+                    FROM `finflow-analytics-production.finflow_data.src_accounts_temp`
+                    
+[2025-01-16T17:32:30.924+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-16T17:32:30.931+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-16T17:32:30.934+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-16T17:32:30.945+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-16T17:32:31.355+0000] {bigquery.py:1595} INFO - Inserting job ***_1737048751353807_91193effd028450ab8bd1d86e1fae7ec
+[2025-01-16T17:32:32.097+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/operators/bigquery.py", line 1249, in execute
+    self.job_id = self.hook.run_query(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 2241, in run_query
+    job = self.insert_job(configuration=configuration, project_id=self.project_id, location=location)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/common/hooks/base_google.py", line 475, in inner_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 1601, in insert_job
+    job_api_repr.result(timeout=timeout, retry=retry)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1580, in result
+    do_get_result()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1570, in do_get_result
+    super(QueryJob, self).result(retry=retry, timeout=timeout)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/base.py", line 922, in result
+    return super(_AsyncJob, self).result(timeout=timeout, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/future/polling.py", line 261, in result
+    raise self._exception
+google.api_core.exceptions.BadRequest: 400 Unrecognized name: currency at [10:25]
+
+Location: us-central1
+Job ID: airflow_1737048751353807_91193effd028450ab8bd1d86e1fae7ec
+
+[2025-01-16T17:32:32.143+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.transform_account_timestamps, execution_date=20250116T173057, start_date=20250116T173229, end_date=20250116T173232
+[2025-01-16T17:32:32.220+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 2248 for task load_to_gcs_bq.transform_account_timestamps (400 Unrecognized name: currency at [10:25]
+
+Location: us-central1
+Job ID: airflow_1737048751353807_91193effd028450ab8bd1d86e1fae7ec
+; 3526)
+[2025-01-16T17:32:32.317+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-16T17:32:32.530+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

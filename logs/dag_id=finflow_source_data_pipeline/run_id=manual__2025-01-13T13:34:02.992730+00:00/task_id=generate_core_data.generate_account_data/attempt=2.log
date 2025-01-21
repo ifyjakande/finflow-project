@@ -1,0 +1,41 @@
+[2025-01-13T13:40:06.285+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_core_data.generate_account_data manual__2025-01-13T13:34:02.992730+00:00 [queued]>
+[2025-01-13T13:40:06.368+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.generate_core_data.generate_account_data manual__2025-01-13T13:34:02.992730+00:00 [queued]>
+[2025-01-13T13:40:06.369+0000] {taskinstance.py:1361} INFO - Starting attempt 2 of 2
+[2025-01-13T13:40:06.525+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): generate_core_data.generate_account_data> on 2025-01-13 13:34:02.992730+00:00
+[2025-01-13T13:40:06.569+0000] {standard_task_runner.py:57} INFO - Started process 505 to run task
+[2025-01-13T13:40:06.602+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'generate_core_data.generate_account_data', 'manual__2025-01-13T13:34:02.992730+00:00', '--job-id', '97', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmper6pgplh']
+[2025-01-13T13:40:06.622+0000] {standard_task_runner.py:85} INFO - Job 97: Subtask generate_core_data.generate_account_data
+[2025-01-13T13:40:06.910+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.generate_core_data.generate_account_data manual__2025-01-13T13:34:02.992730+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T13:40:07.171+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='generate_core_data.generate_account_data' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T13:34:02.992730+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T13:34:02.992730+00:00'
+[2025-01-13T13:40:07.175+0000] {finflow.py:67} INFO - Starting data generation for generate_account_data
+[2025-01-13T13:40:07.374+0000] {finflow.py:312} ERROR - Error generating account data: Missing required customer or product keys
+[2025-01-13T13:40:07.375+0000] {finflow.py:72} ERROR - Error in data generation for generate_account_data: Failed to generate account data: Missing required customer or product keys
+[2025-01-13T13:40:07.376+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/finflow.py", line 272, in generate_account_data
+    raise ReferentialIntegrityError("Missing required customer or product keys")
+unusual_prefix_e3732bef98af2b043177fdcca303303d50b4bb69_finflow.ReferentialIntegrityError: Missing required customer or product keys
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/airflow/dags/finflow.py", line 68, in wrapper
+    result = func(*args, **kwargs)
+  File "/opt/airflow/dags/finflow.py", line 313, in generate_account_data
+    raise DataGenerationError(f"Failed to generate account data: {str(e)}")
+unusual_prefix_e3732bef98af2b043177fdcca303303d50b4bb69_finflow.DataGenerationError: Failed to generate account data: Missing required customer or product keys
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/finflow.py", line 73, in wrapper
+    raise DataGenerationError(f"Failed to generate data in {func.__name__}: {str(e)}")
+unusual_prefix_e3732bef98af2b043177fdcca303303d50b4bb69_finflow.DataGenerationError: Failed to generate data in generate_account_data: Failed to generate account data: Missing required customer or product keys
+[2025-01-13T13:40:07.408+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=finflow_source_data_pipeline, task_id=generate_core_data.generate_account_data, execution_date=20250113T133402, start_date=20250113T134006, end_date=20250113T134007
+[2025-01-13T13:40:07.448+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 97 for task generate_core_data.generate_account_data (Failed to generate data in generate_account_data: Failed to generate account data: Missing required customer or product keys; 505)
+[2025-01-13T13:40:07.488+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-13T13:40:07.559+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

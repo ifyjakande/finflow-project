@@ -1,0 +1,53 @@
+[2025-01-16T16:57:40.592+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_location_timestamps manual__2025-01-16T16:56:03.769592+00:00 [queued]>
+[2025-01-16T16:57:40.877+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_location_timestamps manual__2025-01-16T16:56:03.769592+00:00 [queued]>
+[2025-01-16T16:57:40.880+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T16:57:41.164+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): load_to_gcs_bq.transform_location_timestamps> on 2025-01-16 16:56:03.769592+00:00
+[2025-01-16T16:57:41.299+0000] {standard_task_runner.py:57} INFO - Started process 1842 to run task
+[2025-01-16T16:57:41.379+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.transform_location_timestamps', 'manual__2025-01-16T16:56:03.769592+00:00', '--job-id', '2051', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpc4acj5x5']
+[2025-01-16T16:57:41.455+0000] {standard_task_runner.py:85} INFO - Job 2051: Subtask load_to_gcs_bq.transform_location_timestamps
+[2025-01-16T16:57:42.216+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.transform_location_timestamps manual__2025-01-16T16:56:03.769592+00:00 [running]> on host e65a9a79c958
+[2025-01-16T16:57:43.756+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.transform_location_timestamps' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T16:56:03.769592+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T16:56:03.769592+00:00'
+[2025-01-16T16:57:43.788+0000] {bigquery.py:1241} INFO - Executing: 
+                CREATE OR REPLACE TABLE `finflow-analytics-production.finflow_data.src_locations_temp` AS
+                SELECT 
+                    CASE WHEN 'location_key' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(location_key AS INT64)) ELSE location_key END AS location_key, CASE WHEN 'location_id' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(location_id AS INT64)) ELSE location_id END AS location_id, CASE WHEN 'location_name' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(location_name AS INT64)) ELSE location_name END AS location_name, CASE WHEN 'address' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(address AS INT64)) ELSE address END AS address, CASE WHEN 'city' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(city AS INT64)) ELSE city END AS city, CASE WHEN 'state' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(state AS INT64)) ELSE state END AS state, CASE WHEN 'region' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(region AS INT64)) ELSE region END AS region, CASE WHEN 'country' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(country AS INT64)) ELSE country END AS country, CASE WHEN 'country_name' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(country_name AS INT64)) ELSE country_name END AS country_name, CASE WHEN 'country_code' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(country_code AS INT64)) ELSE country_code END AS country_code, CASE WHEN 'currency_code' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(currency_code AS INT64)) ELSE currency_code END AS currency_code, CASE WHEN 'postal_code' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(postal_code AS INT64)) ELSE postal_code END AS postal_code, CASE WHEN 'timezone' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(timezone AS INT64)) ELSE timezone END AS timezone, CASE WHEN 'latitude' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(latitude AS INT64)) ELSE latitude END AS latitude, CASE WHEN 'longitude' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(longitude AS INT64)) ELSE longitude END AS longitude, CASE WHEN 'created_at' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(created_at AS INT64)) ELSE created_at END AS created_at, CASE WHEN 'updated_at' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(updated_at AS INT64)) ELSE updated_at END AS updated_at, CASE WHEN 'ingestion_timestamp' IN ('created_at', 'updated_at', 'ingestion_timestamp') THEN TIMESTAMP_SECONDS(CAST(ingestion_timestamp AS INT64)) ELSE ingestion_timestamp END AS ingestion_timestamp
+                FROM `finflow-analytics-production.finflow_data.src_locations_temp`
+                
+[2025-01-16T16:57:43.805+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-16T16:57:43.848+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-16T16:57:43.853+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-16T16:57:43.895+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-16T16:57:45.136+0000] {bigquery.py:1595} INFO - Inserting job ***_1737046665079493_092e54fda2b77e2546ee91073477203a
+[2025-01-16T16:57:46.510+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/operators/bigquery.py", line 1249, in execute
+    self.job_id = self.hook.run_query(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 2241, in run_query
+    job = self.insert_job(configuration=configuration, project_id=self.project_id, location=location)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/common/hooks/base_google.py", line 475, in inner_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 1601, in insert_job
+    job_api_repr.result(timeout=timeout, retry=retry)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1580, in result
+    do_get_result()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1570, in do_get_result
+    super(QueryJob, self).result(retry=retry, timeout=timeout)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/base.py", line 922, in result
+    return super(_AsyncJob, self).result(timeout=timeout, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/future/polling.py", line 261, in result
+    raise self._exception
+google.api_core.exceptions.BadRequest: 400 No matching signature for operator CASE; all THEN/ELSE arguments must be coercible to a common type but found: INT64, TIMESTAMP; actual argument types (WHEN THEN) ELSE: (BOOL TIMESTAMP) INT64 at [4:21]
+
+Location: us-central1
+Job ID: airflow_1737046665079493_092e54fda2b77e2546ee91073477203a
+
+[2025-01-16T16:57:46.645+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.transform_location_timestamps, execution_date=20250116T165603, start_date=20250116T165740, end_date=20250116T165746
+[2025-01-16T16:57:46.876+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 2051 for task load_to_gcs_bq.transform_location_timestamps (400 No matching signature for operator CASE; all THEN/ELSE arguments must be coercible to a common type but found: INT64, TIMESTAMP; actual argument types (WHEN THEN) ELSE: (BOOL TIMESTAMP) INT64 at [4:21]
+
+Location: us-central1
+Job ID: airflow_1737046665079493_092e54fda2b77e2546ee91073477203a
+; 1842)
+[2025-01-16T16:57:47.116+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-16T16:57:47.583+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

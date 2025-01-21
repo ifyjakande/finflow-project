@@ -1,0 +1,7 @@
+Faker==19.13.0
+kafka-python==2.0.2
+pyarrow==14.0.1
+pandas<2.1.0
+apache-airflow-providers-google
+google-cloud-bigquery
+dbt-bigquery

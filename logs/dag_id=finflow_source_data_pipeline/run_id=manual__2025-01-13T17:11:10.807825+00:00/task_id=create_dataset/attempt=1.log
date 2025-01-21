@@ -1,0 +1,19 @@
+[2025-01-13T17:11:14.253+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.create_dataset manual__2025-01-13T17:11:10.807825+00:00 [queued]>
+[2025-01-13T17:11:14.270+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.create_dataset manual__2025-01-13T17:11:10.807825+00:00 [queued]>
+[2025-01-13T17:11:14.271+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-13T17:11:14.320+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryCreateEmptyDatasetOperator): create_dataset> on 2025-01-13 17:11:10.807825+00:00
+[2025-01-13T17:11:14.337+0000] {standard_task_runner.py:57} INFO - Started process 8741 to run task
+[2025-01-13T17:11:14.361+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'create_dataset', 'manual__2025-01-13T17:11:10.807825+00:00', '--job-id', '419', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmp46qnv960']
+[2025-01-13T17:11:14.375+0000] {standard_task_runner.py:85} INFO - Job 419: Subtask create_dataset
+[2025-01-13T17:11:14.546+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.create_dataset manual__2025-01-13T17:11:10.807825+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T17:11:14.886+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='create_dataset' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T17:11:10.807825+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T17:11:10.807825+00:00'
+[2025-01-13T17:11:14.896+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-13T17:11:14.897+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-13T17:11:14.903+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-13T17:11:14.903+0000] {bigquery.py:468} INFO - datasetId was not specified in `dataset_reference`. Will use default value finflow_raw.
+[2025-01-13T17:11:14.904+0000] {bigquery.py:468} INFO - projectId was not specified in `dataset_reference`. Will use default value finflow-analytics-production.
+[2025-01-13T17:11:14.904+0000] {bigquery.py:479} INFO - Creating dataset: finflow_raw in project: finflow-analytics-production 
+[2025-01-13T17:11:15.829+0000] {bigquery.py:483} INFO - Dataset created successfully.
+[2025-01-13T17:11:15.907+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=create_dataset, execution_date=20250113T171110, start_date=20250113T171114, end_date=20250113T171115
+[2025-01-13T17:11:16.008+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-13T17:11:16.125+0000] {taskinstance.py:2778} INFO - 1 downstream tasks scheduled from follow-on schedule check

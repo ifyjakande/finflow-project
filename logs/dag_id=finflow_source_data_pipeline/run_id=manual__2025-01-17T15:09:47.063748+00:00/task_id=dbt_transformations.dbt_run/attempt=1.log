@@ -1,0 +1,76 @@
+[2025-01-17T15:12:51.521+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.dbt_transformations.dbt_run manual__2025-01-17T15:09:47.063748+00:00 [queued]>
+[2025-01-17T15:12:51.538+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.dbt_transformations.dbt_run manual__2025-01-17T15:09:47.063748+00:00 [queued]>
+[2025-01-17T15:12:51.538+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-17T15:12:51.554+0000] {taskinstance.py:1382} INFO - Executing <Task(DbtBaseOperator): dbt_transformations.dbt_run> on 2025-01-17 15:09:47.063748+00:00
+[2025-01-17T15:12:51.563+0000] {standard_task_runner.py:57} INFO - Started process 1720 to run task
+[2025-01-17T15:12:51.569+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'dbt_transformations.dbt_run', 'manual__2025-01-17T15:09:47.063748+00:00', '--job-id', '3363', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpyepvb964']
+[2025-01-17T15:12:51.574+0000] {standard_task_runner.py:85} INFO - Job 3363: Subtask dbt_transformations.dbt_run
+[2025-01-17T15:12:51.634+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.dbt_transformations.dbt_run manual__2025-01-17T15:09:47.063748+00:00 [running]> on host 9b2833750dff
+[2025-01-17T15:12:51.735+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='dbt_transformations.dbt_run' AIRFLOW_CTX_EXECUTION_DATE='2025-01-17T15:09:47.063748+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-17T15:09:47.063748+00:00'
+[2025-01-17T15:13:28.256+0000] {finflow.py:618} INFO - [0m15:12:55  Running with dbt=1.8.7
+[0m15:13:00  [[33mWARNING[0m]: Deprecated functionality
+The `tests` config has been renamed to `data_tests`. Please see
+https://docs.getdbt.com/docs/build/data-tests#new-data_tests-syntax for more
+information.
+[0m15:13:01  Registered adapter: bigquery=1.8.3
+[0m15:13:01  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:13:09  [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 6 unused configuration paths:
+- data_tests.finflow_analytics.singular.test_referential_integrity_full
+- data_tests.finflow_analytics.generic.consistent_balances
+- data_tests.finflow_analytics.singular.test_balance_reconciliation_full
+- data_tests.finflow_analytics.generic.metric_variance
+- data_tests.finflow_analytics.singular.test_customer_metric_consistency
+- data_tests.finflow_analytics.generic.transaction_limits
+[0m15:13:09  Found 19 models, 1 snapshot, 3 analyses, 103 data tests, 6 sources, 868 macros
+[0m15:13:09  
+[0m15:13:11  Concurrency: 4 threads (target='prod')
+[0m15:13:11  
+[0m15:13:11  1 of 19 START sql incremental model finflow_data_bronze.src_accounts ........... [RUN]
+[0m15:13:11  2 of 19 START sql incremental model finflow_data_bronze.src_customers .......... [RUN]
+[0m15:13:11  4 of 19 START sql incremental model finflow_data_bronze.src_locations .......... [RUN]
+[0m15:13:11  3 of 19 START sql incremental model finflow_data_bronze.src_dates .............. [RUN]
+[0m15:13:15  2 of 19 OK created sql incremental model finflow_data_bronze.src_customers ..... [[32mCREATE TABLE (100.0 rows, 21.5 KiB processed)[0m in 4.09s]
+[0m15:13:15  5 of 19 START sql incremental model finflow_data_bronze.src_products ........... [RUN]
+[0m15:13:15  4 of 19 OK created sql incremental model finflow_data_bronze.src_locations ..... [[32mCREATE TABLE (50.0 rows, 9.8 KiB processed)[0m in 4.28s]
+[0m15:13:15  3 of 19 OK created sql incremental model finflow_data_bronze.src_dates ......... [[32mCREATE TABLE (365.0 rows, 32.5 KiB processed)[0m in 4.27s]
+[0m15:13:15  6 of 19 START sql incremental model finflow_data_bronze.src_transactions ....... [RUN]
+[0m15:13:15  7 of 19 START sql table model finflow_data_gold.dim_location ................... [RUN]
+[0m15:13:15  1 of 19 OK created sql incremental model finflow_data_bronze.src_accounts ...... [[32mCREATE TABLE (215.0 rows, 24.0 KiB processed)[0m in 4.39s]
+[0m15:13:15  8 of 19 START sql table model finflow_data_gold.dim_date ....................... [RUN]
+[0m15:13:18  5 of 19 OK created sql incremental model finflow_data_bronze.src_products ...... [[32mCREATE TABLE (19.0 rows, 1.8 KiB processed)[0m in 2.99s]
+[0m15:13:18  9 of 19 START sql table model finflow_data_gold.dim_account .................... [RUN]
+[0m15:13:18  8 of 19 OK created sql table model finflow_data_gold.dim_date .................. [[32mCREATE TABLE (365.0 rows, 32.5 KiB processed)[0m in 2.93s]
+[0m15:13:18  10 of 19 START sql table model finflow_data_gold.dim_product ................... [RUN]
+[0m15:13:18  7 of 19 OK created sql table model finflow_data_gold.dim_location .............. [[32mCREATE TABLE (50.0 rows, 9.8 KiB processed)[0m in 3.09s]
+[0m15:13:18  11 of 19 START sql view model finflow_data_silver.int_customer_product_metrics . [RUN]
+[0m15:13:18  6 of 19 OK created sql incremental model finflow_data_bronze.src_transactions .. [[32mCREATE TABLE (3.0k rows, 319.4 KiB processed)[0m in 3.14s]
+[0m15:13:18  12 of 19 START sql view model finflow_data_silver.int_account_metrics .......... [RUN]
+[0m15:13:20  12 of 19 OK created sql view model finflow_data_silver.int_account_metrics ..... [[32mCREATE VIEW (0 processed)[0m in 1.24s]
+[0m15:13:20  13 of 19 START sql view model finflow_data_silver.int_account_risk_metrics ..... [RUN]
+[0m15:13:20  11 of 19 OK created sql view model finflow_data_silver.int_customer_product_metrics  [[32mCREATE VIEW (0 processed)[0m in 1.45s]
+[0m15:13:20  14 of 19 START sql view model finflow_data_silver.int_customer_metrics ......... [RUN]
+[0m15:13:20  13 of 19 OK created sql view model finflow_data_silver.int_account_risk_metrics  [[32mCREATE VIEW (0 processed)[0m in 0.86s]
+[0m15:13:20  15 of 19 START sql view model finflow_data_silver.int_transaction_metrics ...... [RUN]
+[0m15:13:21  14 of 19 OK created sql view model finflow_data_silver.int_customer_metrics .... [[32mCREATE VIEW (0 processed)[0m in 0.86s]
+[0m15:13:21  16 of 19 START sql incremental model finflow_data_gold.dim_customer ............ [RUN]
+[0m15:13:21  15 of 19 OK created sql view model finflow_data_silver.int_transaction_metrics . [[32mCREATE VIEW (0 processed)[0m in 0.66s]
+[0m15:13:21  17 of 19 START sql table model finflow_data_gold.fact_account_balances ......... [RUN]
+[0m15:13:21  10 of 19 OK created sql table model finflow_data_gold.dim_product .............. [[32mCREATE TABLE (19.0 rows, 1.8 KiB processed)[0m in 3.24s]
+[0m15:13:21  18 of 19 START sql table model finflow_data_gold.fact_customer_metrics ......... [RUN]
+[0m15:13:22  9 of 19 OK created sql table model finflow_data_gold.dim_account ............... [[32mCREATE TABLE (215.0 rows, 23.4 KiB processed)[0m in 3.53s]
+[0m15:13:24  16 of 19 OK created sql incremental model finflow_data_gold.dim_customer ....... [[32mCREATE TABLE (100.0 rows, 28.8 KiB processed)[0m in 3.04s]
+[0m15:13:24  19 of 19 START sql incremental model finflow_data_gold.fact_transactions ....... [RUN]
+[0m15:13:25  17 of 19 OK created sql table model finflow_data_gold.fact_account_balances .... [[32mCREATE TABLE (3.6k rows, 189.5 KiB processed)[0m in 3.37s]
+[0m15:13:25  18 of 19 OK created sql table model finflow_data_gold.fact_customer_metrics .... [[32mCREATE TABLE (1.1k rows, 186.4 KiB processed)[0m in 3.69s]
+[0m15:13:27  19 of 19 OK created sql incremental model finflow_data_gold.fact_transactions .. [[32mCREATE TABLE (3.0k rows, 296.5 KiB processed)[0m in 2.83s]
+[0m15:13:27  
+[0m15:13:27  Finished running 8 incremental models, 6 table models, 5 view models in 0 hours 0 minutes and 17.03 seconds (17.03s).
+[0m15:13:27  
+[0m15:13:27  [32mCompleted successfully[0m
+[0m15:13:27  
+[0m15:13:27  Done. PASS=19 WARN=0 ERROR=0 SKIP=0 TOTAL=19
+
+[2025-01-17T15:13:28.312+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=finflow_source_data_pipeline, task_id=dbt_transformations.dbt_run, execution_date=20250117T150947, start_date=20250117T151251, end_date=20250117T151328
+[2025-01-17T15:13:28.374+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2025-01-17T15:13:28.412+0000] {taskinstance.py:2778} INFO - 1 downstream tasks scheduled from follow-on schedule check

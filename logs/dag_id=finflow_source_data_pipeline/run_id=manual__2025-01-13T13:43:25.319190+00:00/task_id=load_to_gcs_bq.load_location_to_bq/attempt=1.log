@@ -1,0 +1,40 @@
+[2025-01-13T13:44:11.113+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.load_location_to_bq manual__2025-01-13T13:43:25.319190+00:00 [queued]>
+[2025-01-13T13:44:11.243+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.load_location_to_bq manual__2025-01-13T13:43:25.319190+00:00 [queued]>
+[2025-01-13T13:44:11.253+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 2
+[2025-01-13T13:44:11.410+0000] {taskinstance.py:1382} INFO - Executing <Task(GCSToBigQueryOperator): load_to_gcs_bq.load_location_to_bq> on 2025-01-13 13:43:25.319190+00:00
+[2025-01-13T13:44:11.469+0000] {standard_task_runner.py:57} INFO - Started process 686 to run task
+[2025-01-13T13:44:11.514+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.load_location_to_bq', 'manual__2025-01-13T13:43:25.319190+00:00', '--job-id', '109', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmp5bbj__wh']
+[2025-01-13T13:44:11.550+0000] {standard_task_runner.py:85} INFO - Job 109: Subtask load_to_gcs_bq.load_location_to_bq
+[2025-01-13T13:44:11.994+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.load_location_to_bq manual__2025-01-13T13:43:25.319190+00:00 [running]> on host ab4e86dc450e
+[2025-01-13T13:44:12.662+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.load_location_to_bq' AIRFLOW_CTX_EXECUTION_DATE='2025-01-13T13:43:25.319190+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-13T13:43:25.319190+00:00'
+[2025-01-13T13:44:12.677+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-13T13:44:12.684+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-13T13:44:12.691+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-13T13:44:12.704+0000] {gcs_to_bigquery.py:376} INFO - Using existing BigQuery table for storing data...
+[2025-01-13T13:44:13.153+0000] {gcs_to_bigquery.py:380} INFO - Executing: {'load': {'autodetect': True, 'createDisposition': 'CREATE_IF_NEEDED', 'destinationTable': {'projectId': 'finflow-analytics-production', 'datasetId': 'finflow_raw', 'tableId': 'src_locations'}, 'sourceFormat': 'PARQUET', 'sourceUris': ['gs://finflow-analytics-data/raw/locations/2025-01-13/locations.parquet'], 'writeDisposition': 'WRITE_APPEND', 'ignoreUnknownValues': False, 'schema': {'fields': [{'name': 'location_key', 'type': 'INTEGER', 'mode': 'REQUIRED'}, {'name': 'location_id', 'type': 'STRING', 'mode': 'REQUIRED'}, {'name': 'country_code', 'type': 'STRING', 'mode': 'REQUIRED'}, {'name': 'country_name', 'type': 'STRING', 'mode': 'REQUIRED'}, {'name': 'region', 'type': 'STRING', 'mode': 'REQUIRED'}, {'name': 'state', 'type': 'STRING', 'mode': 'REQUIRED'}, {'name': 'city', 'type': 'STRING', 'mode': 'REQUIRED'}, {'name': 'timezone', 'type': 'STRING', 'mode': 'REQUIRED'}, {'name': 'currency_code', 'type': 'STRING', 'mode': 'REQUIRED'}, {'name': 'created_at', 'type': 'TIMESTAMP', 'mode': 'REQUIRED'}, {'name': 'updated_at', 'type': 'TIMESTAMP', 'mode': 'REQUIRED'}, {'name': 'ingestion_timestamp', 'type': 'TIMESTAMP', 'mode': 'REQUIRED'}]}}}
+[2025-01-13T13:44:13.169+0000] {bigquery.py:1595} INFO - Inserting job ***_finflow_source_data_pipeline_load_to_gcs_bq_load_location_to_bq_2025_01_13T13_43_25_319190_00_00_d34e926b4996dbaa408787c0ab8e86df
+[2025-01-13T13:44:13.591+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/transfers/gcs_to_bigquery.py", line 381, in execute
+    job: BigQueryJob | UnknownJob = self._submit_job(self.hook, job_id)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/transfers/gcs_to_bigquery.py", line 303, in _submit_job
+    return hook.insert_job(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/common/hooks/base_google.py", line 475, in inner_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 1598, in insert_job
+    job_api_repr._begin()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/base.py", line 693, in _begin
+    api_response = client._call_api(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/client.py", line 808, in _call_api
+    return call()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry.py", line 366, in retry_wrapped_func
+    return retry_target(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry.py", line 204, in retry_target
+    return target()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/_http/__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.NotFound: 404 POST https://bigquery.googleapis.com/bigquery/v2/projects/finflow-analytics-production/jobs?prettyPrint=false: Not found: Dataset finflow-analytics-production:finflow_raw
+[2025-01-13T13:44:13.658+0000] {taskinstance.py:1400} INFO - Marking task as UP_FOR_RETRY. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.load_location_to_bq, execution_date=20250113T134325, start_date=20250113T134411, end_date=20250113T134413
+[2025-01-13T13:44:13.739+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 109 for task load_to_gcs_bq.load_location_to_bq (404 POST https://bigquery.googleapis.com/bigquery/v2/projects/finflow-analytics-production/jobs?prettyPrint=false: Not found: Dataset finflow-analytics-production:finflow_raw; 686)
+[2025-01-13T13:44:13.822+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-13T13:44:14.016+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,97 @@
+[2025-01-16T02:38:11.894+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_account_to_main manual__2025-01-16T02:36:25.166614+00:00 [queued]>
+[2025-01-16T02:38:12.061+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_account_to_main manual__2025-01-16T02:36:25.166614+00:00 [queued]>
+[2025-01-16T02:38:12.062+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2025-01-16T02:38:12.143+0000] {taskinstance.py:1382} INFO - Executing <Task(BigQueryExecuteQueryOperator): load_to_gcs_bq.merge_account_to_main> on 2025-01-16 02:36:25.166614+00:00
+[2025-01-16T02:38:12.215+0000] {standard_task_runner.py:57} INFO - Started process 3058 to run task
+[2025-01-16T02:38:12.226+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'finflow_source_data_pipeline', 'load_to_gcs_bq.merge_account_to_main', 'manual__2025-01-16T02:36:25.166614+00:00', '--job-id', '1689', '--raw', '--subdir', 'DAGS_FOLDER/finflow.py', '--cfg-path', '/tmp/tmpxuudry6t']
+[2025-01-16T02:38:12.327+0000] {standard_task_runner.py:85} INFO - Job 1689: Subtask load_to_gcs_bq.merge_account_to_main
+[2025-01-16T02:38:12.747+0000] {task_command.py:416} INFO - Running <TaskInstance: finflow_source_data_pipeline.load_to_gcs_bq.merge_account_to_main manual__2025-01-16T02:36:25.166614+00:00 [running]> on host a445abefd56a
+[2025-01-16T02:38:13.416+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='finflow_source_data_pipeline' AIRFLOW_CTX_TASK_ID='load_to_gcs_bq.merge_account_to_main' AIRFLOW_CTX_EXECUTION_DATE='2025-01-16T02:36:25.166614+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-01-16T02:36:25.166614+00:00'
+[2025-01-16T02:38:13.429+0000] {bigquery.py:1241} INFO - Executing: 
+-- Create the target table if it doesn't exist
+CREATE TABLE IF NOT EXISTS `finflow-analytics-production.finflow_data.src_accounts` (
+    account_key INTEGER NOT NULL,
+    account_id INTEGER NOT NULL,
+    customer_key INTEGER NOT NULL,
+    product_key INTEGER NOT NULL,
+    account_type STRING NOT NULL,
+    account_status STRING NOT NULL,
+    initial_deposit FLOAT64 NOT NULL,
+    minimum_balance FLOAT64 NOT NULL,
+    balance FLOAT64 NOT NULL,
+    credit_limit FLOAT64 NOT NULL,
+    opened_date DATE NOT NULL,
+    closed_date DATE,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    ingestion_timestamp TIMESTAMP NOT NULL
+);
+
+-- Perform the merge operation
+MERGE `finflow-analytics-production.finflow_data.src_accounts` T
+USING (
+    SELECT 
+        *,
+        CAST(created_at AS TIMESTAMP) as created_at,
+        CAST(updated_at AS TIMESTAMP) as updated_at,
+        CAST(ingestion_timestamp AS TIMESTAMP) as ingestion_timestamp
+    FROM `finflow-analytics-production.finflow_data.src_accounts_temp`
+) S
+ON T.account_key = S.account_key
+WHEN MATCHED THEN
+    UPDATE SET
+        T.account_id = S.account_id,
+        T.customer_key = S.customer_key,
+        T.product_key = S.product_key,
+        T.account_type = S.account_type,
+        T.account_status = S.account_status,
+        T.initial_deposit = S.initial_deposit,
+        T.minimum_balance = S.minimum_balance,
+        T.balance = S.balance,
+        T.credit_limit = S.credit_limit,
+        T.opened_date = S.opened_date,
+        T.closed_date = S.closed_date,
+        T.created_at = S.created_at,
+        T.updated_at = S.updated_at,
+        T.ingestion_timestamp = S.ingestion_timestamp
+WHEN NOT MATCHED THEN
+    INSERT (account_key, account_id, customer_key, product_key, account_type, account_status, initial_deposit, minimum_balance, balance, credit_limit, opened_date, closed_date, created_at, updated_at, ingestion_timestamp)
+    VALUES (S.account_key, S.account_id, S.customer_key, S.product_key, S.account_type, S.account_status, S.initial_deposit, S.minimum_balance, S.balance, S.credit_limit, S.opened_date, S.closed_date, S.created_at, S.updated_at, S.ingestion_timestamp)
+[2025-01-16T02:38:13.441+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2025-01-16T02:38:13.448+0000] {connection.py:232} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2025-01-16T02:38:13.455+0000] {base.py:73} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2025-01-16T02:38:13.483+0000] {warnings.py:109} WARNING - /home/***/.local/lib/python3.8/site-packages/***/providers/google/cloud/hooks/bigquery.py:2108: AirflowProviderDeprecationWarning: This method is deprecated. Please use `BigQueryHook.insert_job` method.
+  warnings.warn(
+
+[2025-01-16T02:38:14.093+0000] {bigquery.py:1595} INFO - Inserting job ***_1736995094068654_59af14fc7127f3ca7fc748bc0fbe4791
+[2025-01-16T02:38:15.694+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/operators/bigquery.py", line 1249, in execute
+    self.job_id = self.hook.run_query(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 2241, in run_query
+    job = self.insert_job(configuration=configuration, project_id=self.project_id, location=location)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/common/hooks/base_google.py", line 475, in inner_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 1601, in insert_job
+    job_api_repr.result(timeout=timeout, retry=retry)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1580, in result
+    do_get_result()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/query.py", line 1570, in do_get_result
+    super(QueryJob, self).result(retry=retry, timeout=timeout)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/job/base.py", line 922, in result
+    return super(_AsyncJob, self).result(timeout=timeout, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/future/polling.py", line 261, in result
+    raise self._exception
+google.api_core.exceptions.BadRequest: 400 Query error: Invalid cast from INT64 to TIMESTAMP at [26:14]
+
+Location: us-central1
+Job ID: airflow_1736995094068654_59af14fc7127f3ca7fc748bc0fbe4791
+
+[2025-01-16T02:38:15.739+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=finflow_source_data_pipeline, task_id=load_to_gcs_bq.merge_account_to_main, execution_date=20250116T023625, start_date=20250116T023811, end_date=20250116T023815
+[2025-01-16T02:38:15.811+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 1689 for task load_to_gcs_bq.merge_account_to_main (400 Query error: Invalid cast from INT64 to TIMESTAMP at [26:14]
+
+Location: us-central1
+Job ID: airflow_1736995094068654_59af14fc7127f3ca7fc748bc0fbe4791
+; 3058)
+[2025-01-16T02:38:15.887+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2025-01-16T02:38:16.118+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check
