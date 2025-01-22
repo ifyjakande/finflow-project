@@ -4,7 +4,7 @@ FinFlow Analytics is a modern data pipeline that processes financial transaction
 
 ## Architecture Overview 🏗️
 
-![FinFlow Analytics Architecture](architecture.png)
+![FinFlow Analytics Architecture](screenshots/architecture.png)
 
 The architecture consists of three main components:
 
@@ -44,7 +44,7 @@ For the service account, you need to grant the following roles:
 
 ## Data Model 📊
 
-![FinFlow Data Model](data_model.png)
+![FinFlow Data Model](screenshots/finflow-data-model.jpg)
 
 The data warehouse follows a dimensional modeling approach with:
 
